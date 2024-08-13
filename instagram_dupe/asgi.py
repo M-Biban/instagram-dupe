@@ -1,5 +1,5 @@
 """
-ASGI config for wii_themed_project project.
+ASGI config for instagram_dupe project.
 
 It exposes the ASGI callable as a module-level variable named ``application``.
 
@@ -11,6 +11,6 @@ import os
 
 from django.core.asgi import get_asgi_application
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wii_themed_project.settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'instagram_dupe.settings')
 
 application = get_asgi_application()
