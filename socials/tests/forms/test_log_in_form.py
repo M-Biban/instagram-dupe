@@ -1,5 +1,4 @@
 """Unit tests for the Log In Form."""
-from django.core.exceptions import ValidationError
 from django.test import TestCase
 from socials.models import User
 from socials.forms import LogInForm

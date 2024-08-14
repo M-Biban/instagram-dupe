@@ -25,7 +25,7 @@ class NewPasswordMixin(forms.Form):
                     'character and a number'
             )]
     )
-    password_confirmation = forms.CharField(label='Password confirmation', widget=forms.PasswordInput())
+    password_confirmation = forms.CharField(label='Password confirmation', widget=forms.PasswordInput(), required=False)
 
     def clean(self):
         """Form mixing for new_password and password_confirmation fields."""
@@ -35,8 +35,8 @@ class NewPasswordMixin(forms.Form):
         password_confirmation = self.cleaned_data.get('password_confirmation')
         if new_password != password_confirmation:
             self.add_error('password_confirmation', 'Confirmation does not match password.')
-            
-class SignUpForm(forms.ModelForm, NewPasswordMixin):
+
+class SignUpForm(NewPasswordMixin, forms.ModelForm):
     
     class Meta:
         """Form options"""
@@ -53,6 +53,7 @@ class SignUpForm(forms.ModelForm, NewPasswordMixin):
             first_name = self.cleaned_data.get('first_name'),
             last_name = self.cleaned_data.get('last_name'),
             email = self.cleaned_data.get('email'),
+            password = self.cleaned_data.get('new_password')
         )
         
         return user
