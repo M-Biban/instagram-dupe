@@ -21,5 +21,7 @@ from socials import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.home, name="home"),
-    path('sign-up', views.SignUpView.as_view(), name="sign-up"),
+    path('sign-up/', views.SignUpView.as_view(), name="sign-up"),
+    path('log-in/', views.LogInView.as_view(), name="log-in"),
 ]
+
