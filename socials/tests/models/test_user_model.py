@@ -61,6 +61,14 @@ class UserModelTestCase(TestCase):
         self.user.last_name = 'SMITH123##'
         self._assert_user_is_invalid()
         
+    def test_email_cannot_be_blank(self):
+        self.user.username = ''
+        self._assert_user_is_invalid()
+        
+    def test_email_must_be_unique(self):
+        self.user.email = self.other.email
+        self._assert_user_is_invalid()
+        
     def _assert_user_is_valid(self):
         try:
             self.user.full_clean()
