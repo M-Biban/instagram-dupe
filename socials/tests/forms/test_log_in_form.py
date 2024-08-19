@@ -31,12 +31,12 @@ class LogInFormTestCase(TestCase):
     def test_form_accepts_wrong_username(self):
         self.form_input['username'] = 'john'
         form = LogInForm(data=self.form_input)
-        self.assertTrue(form.is_valid())
+        self.assertFalse(form.is_valid())
         
     def test_form_accepts_wrong_password(self):
         self.form_input['password'] = 'john'
         form = LogInForm(data=self.form_input)
-        self.assertTrue(form.is_valid())
+        self.assertFalse(form.is_valid())
         
     def test_form_authenticates_user(self):
         form = LogInForm(data=self.form_input)
