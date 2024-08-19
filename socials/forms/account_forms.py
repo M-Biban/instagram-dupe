@@ -63,6 +63,19 @@ class LogInForm(forms.Form):
     username = forms.CharField(label="Username")
     password = forms.CharField(label="Password", widget=forms.PasswordInput())
     
+    def clean(self):
+        """Custom validation to check if user can be authenticated."""
+        cleaned_data = super().clean()
+        username = cleaned_data.get('username')
+        password = cleaned_data.get('password')
+
+        if username and password:
+            user = authenticate(username=username, password=password)
+            if user is None:
+                raise forms.ValidationError("Invalid username or password.")
+        
+        return cleaned_data
+    
     def get_user(self):
         """Returns authenticated user if possible."""
 
