@@ -85,3 +85,26 @@ class LogInForm(forms.Form):
             password = self.cleaned_data.get('password')
             user = authenticate(username=username, password=password)
         return user
+    
+class ConfirmPasswordForm(forms.Form):
+    """Password Confirmation Form"""
+
+    password = forms.CharField(label='Current password', widget=forms.PasswordInput())
+    
+    def __init__(self, user=None, **kwargs):
+        super().__init__(**kwargs)
+        self.user = user
+    
+    def clean(self):
+        """Clean the data and generate messages for any errors."""
+
+        super().clean()
+        password = self.cleaned_data.get('password')
+        if self.user is not None:
+            user = authenticate(username=self.user.username, password=password)
+        else:
+            user = None
+        if user is None:
+            self.add_error('password', "Password is invalid")
+            
+        return password

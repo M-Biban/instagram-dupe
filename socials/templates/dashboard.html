@@ -6,6 +6,7 @@
           <h1>Welcome, {{ user.username }}</h1>
         </div>
         <a href='{% url 'log-out' %}' class="btn">Log out</a>
+        <a href='{% url 'view-profile' %}' class="btn">View profile</a>
       </div>
     </div>
 {%endblock%}

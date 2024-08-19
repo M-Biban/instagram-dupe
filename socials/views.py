@@ -1,14 +1,16 @@
 # socials/views.py
 from django.shortcuts import render, redirect
-from django.views.generic import FormView, View
+from django.views.generic import FormView, View, UpdateView
 from django.contrib.auth import login, logout
-from .forms import SignUpForm, LogInForm
+from .forms import SignUpForm, LogInForm, ConfirmPasswordForm, UserForm
+from .models import User
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from socials.helpers import login_prohibited
 from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured, PermissionDenied
+from django.core.exceptions import ImproperlyConfigured
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 @login_prohibited
 def home(request):
@@ -53,8 +55,13 @@ class SignUpView(LoginProhibitedMixin, FormView):
         self.object = form.save()
         login(self.request, self.object)
         return super().form_valid(form)
+    
+    def form_invalid(self, form):
+        messages.add_message(self.request, messages.ERROR, "Please correct the errors below and try again!")
+        return self.render_to_response(self.get_context_data(form=form))
 
     def get_success_url(self):
+        messages.add_message(self.request, messages.SUCCESS, "Account created!")
         return reverse(self.redirect_when_logged_in_url)
 
 
@@ -70,7 +77,7 @@ class LogInView(LoginProhibitedMixin, FormView):
     
     def form_invalid(self, form):
         messages.add_message(self.request, messages.ERROR, "The credentials provided were invalid!")
-        return redirect(reverse('log-in'))
+        return self.render_to_response(self.get_context_data(form=form))
 
     def get_success_url(self):
         return reverse(self.redirect_when_logged_in_url)
@@ -83,4 +90,45 @@ def log_out(request):
     logout(request)
     return redirect('home')
 
+@login_required
+def view_profile(request):
+    return render(request, 'view-profile.html',{'user': request.user})
 
+class DeleteAccountView(LoginRequiredMixin, FormView):
+    
+    form_class = ConfirmPasswordForm
+    template_name = 'delete-profile.html'
+    
+    def get_object(self, queryset=None):
+        """Return current user to be deleted"""
+        return self.request.user
+    
+    def get_form_kwargs(self, **kwargs):
+        """Pass the current user to the password change form."""
+        kwargs = super().get_form_kwargs(**kwargs)
+        kwargs.update({'user': self.request.user})
+        return kwargs
+    
+    def form_valid(self, form):
+        """Check form valid to confirm user deletion"""
+        self.object = self.get_object()
+        self.object.delete()
+        messages.add_message(self.request, messages.SUCCESS, "Account deleted!")
+        return redirect('home')
+    
+class ProfileUpdateView(LoginRequiredMixin, UpdateView):
+    """Display user profile editing screen, and handle profile modifications."""
+
+    model = User
+    template_name = "edit-profile.html"
+    form_class = UserForm
+
+    def get_object(self):
+        """Return the object (user) to be updated."""
+        user = self.request.user
+        return user
+
+    def get_success_url(self):
+        """Return redirect URL after successful update."""
+        messages.add_message(self.request, messages.SUCCESS, "Profile updated!")
+        return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)

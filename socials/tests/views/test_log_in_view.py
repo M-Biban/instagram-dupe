@@ -33,8 +33,6 @@ class LogInViewTestCase(TestCase):
         self.form_input['username'] = 'john'
         response = self.client.post(self.url, self.form_input, follow=True)
         self.assertEqual(response.status_code, 200)
-        response_url = reverse('log-in')
-        self.assertRedirects(response, response_url, status_code=302, target_status_code=200)
         
     def test_login_prohibited_mixin(self):
         self.client.login(username=self.user.username, password='Password123')
