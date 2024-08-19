@@ -5,6 +5,7 @@
         <div class="col-12">
           <h1>Welcome, {{ user.username }}</h1>
         </div>
+        <a href='{% url 'log-out' %}' class="btn">Log out</a>
       </div>
     </div>
 {%endblock%}

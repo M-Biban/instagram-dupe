@@ -55,3 +55,10 @@ class SignUpViewTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         after_count = User.objects.count()
         self.assertEquals(before_count, after_count)
+        
+    def test_login_prohibited_mixin(self):
+        self.client.login(username=self.user.username, password='Password123')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        response_url = reverse('dashboard')
+        self.assertRedirects(response, response_url, status_code=302, target_status_code=200)

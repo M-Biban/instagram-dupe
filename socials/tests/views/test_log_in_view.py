@@ -4,8 +4,11 @@ from django.test import TestCase
 from socials.models import User
 from django.urls import reverse
 from socials.forms import LogInForm
+from socials.views import LogInView, LoginProhibitedMixin
+from django.core.exceptions import ImproperlyConfigured
+from django.conf import settings
 
-class SignUpViewTestCase(TestCase):
+class LogInViewTestCase(TestCase):
     """Unit tests for Sign Up View."""
 
     fixtures = [
@@ -33,3 +36,9 @@ class SignUpViewTestCase(TestCase):
         response_url = reverse('log-in')
         self.assertRedirects(response, response_url, status_code=302, target_status_code=200)
         
+    def test_login_prohibited_mixin(self):
+        self.client.login(username=self.user.username, password='Password123')
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 302)
+        response_url = reverse('dashboard')
+        self.assertRedirects(response, response_url, status_code=302, target_status_code=200)

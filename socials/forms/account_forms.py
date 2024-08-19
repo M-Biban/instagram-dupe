@@ -25,7 +25,7 @@ class NewPasswordMixin(forms.Form):
                     'character and a number'
             )]
     )
-    password_confirmation = forms.CharField(label='Password confirmation', widget=forms.PasswordInput(), required=False)
+    password_confirmation = forms.CharField(label='Password confirmation', widget=forms.PasswordInput(), required=True)
 
     def clean(self):
         """Form mixing for new_password and password_confirmation fields."""
@@ -48,7 +48,7 @@ class SignUpForm(NewPasswordMixin, forms.ModelForm):
         """Create new user"""
         
         super().save(commit=False)
-        user = User.objects.create(
+        user = User.objects.create_user(
             username = self.cleaned_data.get('username'),
             first_name = self.cleaned_data.get('first_name'),
             last_name = self.cleaned_data.get('last_name'),

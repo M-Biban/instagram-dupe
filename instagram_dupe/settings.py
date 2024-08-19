@@ -129,6 +129,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # User model for authentication and login purposes
 AUTH_USER_MODEL = 'socials.User'
 
+# URL where @login_prohibited redirects to
+REDIRECT_URL_WHEN_LOGGED_IN = 'dashboard'
+
+# Login URL for redirecting users from login protected views
+LOGIN_URL = 'log-in'
+
 # Convert Django ERROR messages to Bootstrap DANGER messages
 MESSAGE_TAGS = {
     messages.ERROR: 'danger',
