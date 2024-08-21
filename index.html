@@ -1,1 +1,8 @@
-<h1>HELLO</h1>
+{% extends 'socials/templates/base_content.html' %}
+{% block content %}
+<div class="container">
+    <h1>Welcome!</h1>
+    <a href='{% url 'sign-up' %}' class="btn">Sign Up</a>
+    <a href='{% url 'log-in' %}' class="btn">Login</a>
+</div>
+{%endblock%}
