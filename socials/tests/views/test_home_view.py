@@ -21,7 +21,7 @@ class DashboardViewTestCase(TestCase):
     def test_home_template(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'home.html')
+        self.assertTemplateUsed(response, 'index.html')
         
     def test_login_prohibitied_mixin(self):
         self.client.login(username = self.user.username, password = 'Password123')
