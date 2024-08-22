@@ -1,0 +1,19 @@
+[
+    {
+      "model": "socials.followrequest",
+      "pk": 1,
+      "fields": {
+        "from_user": 4,
+        "to_user": 3,
+        "accepted": false
+      }
+    },
+    {
+        "model": "socials.followrequest",
+        "pk": 2,
+        "fields": {
+          "from_user": 4,
+          "to_user": 1
+        }
+      }
+]

@@ -1,0 +1,34 @@
+[
+    {
+        "model": "socials.friendship",
+        "pk": 3,
+        "fields": {
+          "user1": 1,
+          "user2": 3
+        }
+      },
+      {
+        "model": "socials.friendship",
+        "pk": 4,
+        "fields": {
+          "user1": 3,
+          "user2": 1
+        }
+      },
+      {
+        "model": "socials.friendship",
+        "pk": 5,
+        "fields": {
+          "user1": 1,
+          "user2": 4
+        }
+      },
+      {
+        "model": "socials.friendship",
+        "pk": 6,
+        "fields": {
+          "user1": 4,
+          "user2": 1
+        }
+      }
+]
