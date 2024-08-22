@@ -20,7 +20,6 @@ class User(AbstractUser):
                                     message = 'Please enter a valid last name'
                                 )])
     email = models.EmailField(unique=True, blank=False)
-    friends = models.ManyToManyField("User", blank=True)
     
     class Meta:
         """Model options."""
