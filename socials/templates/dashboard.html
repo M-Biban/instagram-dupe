@@ -1,6 +1,6 @@
 {% extends 'base_content.html' %}
 {% block content %}
-        <div class="col-12">
+        <div class="container">
           <h1>Welcome, {{ user.username }}</h1>
         </div>
         <a href='{% url 'log-out' %}' class="btn">Log out</a>

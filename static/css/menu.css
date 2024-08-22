@@ -1,29 +1,93 @@
-/* General Navbar Styling */
-.navbar {
+:root {
+    --nav-icon-width: 50px;
+    --nav-border-width: 8px;
+  }
+  
+  html,
+  body {
+    height: 100%;
+    margin: 0;
+    font-family: sans-serif;
+  }
+  
+  .page-container {
+    height: inherit;
     display: flex;
+  }
+  
+  .main {
+    height: inherit;
+    padding: 0;
+    padding-left: var(--nav-border-width);
+    overflow-y: auto;
+  }
+  
+  .nav {
+    width: 12.5em;
+    height: 100vh;
+    position: relative;
+    background-color: #eeeeee;
+    transition: width 0.2s;
+    flex-shrink: 0;
     flex-direction: column;
-    justify-content: space-between;
-    background-color: #fff;
-    padding: 20px 0;
-    border-right: 1px solid #dbdbdb;
-    height: 100vh; /* Full viewport height */
-    position: fixed;
-    width: 10em;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    font-family: Arial, sans-serif;
-    overflow-y: auto; /* Allow vertical scrolling */
-    overflow-x: hidden; /* Prevent horizontal scrolling */
     flex-wrap: nowrap;
-}
+    overflow-y: auto;
+    overflow-x: hidden; 
+  }
+  
+  .nav--collapsed {
+    width: var(--nav-icon-width);
+  }
+  
+  .nav--collapsed .nav__label {
+    display: none;
+  }
+  
+  .nav__link {
+    display: flex;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.75);
+    text-decoration: none;
+    width:inherit;
+  }
+  
+  .nav__link:hover {
+    background-color: #dddddd;
+  }
+  
+  .nav__icon-container {
+    width: var(--nav-icon-width);
+    height: var(--nav-icon-width);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  
+  .nav__label {
+    white-space: nowrap;
+  }
+  
+  .nav__border {
+    position: absolute;
+    right: 0%;
+    width: var(--nav-border-width);
+    height: inherit;
+    background-color: #dddddd;
+    transition: background-color 0.2s;
+    cursor: ew-resize;
+  }
+  
+  .nav__border:hover {
+    background-color: #cccccc;
+  }
 
-/* Top Navigation Styling */
-.top-nav {
+  .top-nav {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    padding-top: 5em;
 }
 
 /* Spacer Styling */
@@ -39,84 +103,4 @@
     width: 100%;
     padding-bottom: 2em;
     border-top: 1px solid #dbdbdb; /* Separate the bottom-nav visually */
-}
-
-/* List Items Styling */
-.nav-item {
-    list-style: none;
-    margin: 0.7em 0;
-    width: 100%;
-}
-
-.nav-item .nav-link {
-    text-decoration: none;
-    color: #262626;
-    font-size: 12px;
-    font-weight: 500;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px 0;
-    width: 100%;
-    transition: color 0.3s ease;
-}
-
-.nav-item .nav-link:hover {
-    color: #0095f6;
-}
-
-/* Active Link Styling */
-.nav-item .nav-link.active {
-    color: #0095f6;
-}
-
-/* Add a simple icon to each nav item (simulating Instagram icons) */
-.nav-item .nav-link:before {
-    content: "";
-    display: inline-block;
-    width: 24px;
-    height: 24px;
-    background-repeat: no-repeat;
-    background-size: contain;
-    margin-bottom: 5px;
-}
-/*
-.nav-item:nth-child(1) .nav-link:before {
-    background-image: url('path-to-home-icon.png'); /* Replace with actual icon path 
-}
-
-.nav-item:nth-child(2) .nav-link:before {
-    background-image: url('path-to-profile-icon.png'); /* Replace with actual icon path 
-}
-
-.nav-item:nth-child(3) .nav-link:before {
-    background-image: url('path-to-search-icon.png'); /* Replace with actual icon path 
-}
-
-.nav-item:nth-child(4) .nav-link:before {
-    background-image: url('path-to-explore-icon.png'); /* Replace with actual icon path 
-}
-
-.bottom-nav .nav-item:nth-child(1) .nav-link:before {
-    background-image: url('path-to-more-icon.png'); /* Replace with actual icon path 
-}
-
-.bottom-nav .nav-item:nth-child(2) .nav-link:before {
-    background-image: url('path-to-settings-icon.png'); /* Replace with actual icon path 
-}
-
-/* Mobile Responsive Styling */
-@media (max-width: 768px) {
-    .navbar {
-        width: 60px;
-    }
-
-    .nav-item .nav-link {
-        font-size: 10px;
-    }
-
-    .nav-item .nav-link:before {
-        width: 20px;
-        height: 20px;
-    }
 }
