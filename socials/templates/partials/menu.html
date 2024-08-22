@@ -1,3 +1,4 @@
+<div class="main-nav-container">
     <nav class="nav">
       <div class="nav__border"></div>
       <div class="top-nav">
@@ -17,13 +18,13 @@
         </div>
         <span class="nav__label">Profile</span>
       </a>
-      <a href="#" class="nav__link">
+      <a href="#" class="nav__link nav__link--search">
         <div class="nav__icon-container">
             <span class="material-symbols-outlined">
                 search
                 </span>
         </div>
-        <span class="nav__link">Search</span>
+        <span class="nav__label">Search</span>
       </a>
       <a href="#" class="nav__link">
         <div class="nav__icon-container">
@@ -63,10 +64,36 @@
       </a>
 </div>
     </nav>
+    {% comment %} Search sidebar {% endcomment %}
+    <div class="search-sidebar" id="searchSidebar">
+        <div class="search-sidebar__content">
+            <input type="text" placeholder="Search...">
+            <button class="close-sidebar" id="closeSidebar">Close</button>
+        </div>
+    </div>
+</div>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const nav = document.querySelector(".nav");
             const navBorder = document.querySelector(".nav__border");
+            const searchLink = document.querySelector(".nav__link--search");
+            const searchSidebar = document.getElementById("searchSidebar");
+            const closeSidebar = document.getElementById("closeSidebar");
+        
+            if (searchLink) {
+                searchLink.addEventListener("click", (e) => {
+                    e.preventDefault();
+                    nav.classList.toggle("nav--collapsed"); // Collapse the navbar
+                    searchSidebar.classList.toggle("search-sidebar--open"); // Open the search sidebar
+                });
+            }
+        
+            if (closeSidebar) {
+                closeSidebar.addEventListener("click", () => {
+                    searchSidebar.classList.remove("search-sidebar--open"); // Close the search sidebar
+                    nav.classList.toggle("nav--collapsed");
+                });
+            }
 
          if (navBorder) {
                 navBorder.addEventListener("click", () => {

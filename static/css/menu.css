@@ -104,3 +104,59 @@
     padding-bottom: 2em;
     border-top: 1px solid #dbdbdb; /* Separate the bottom-nav visually */
 }
+
+/* Search styling */
+.main-nav-container {
+    display: flex;
+    height: 100vh;
+}
+
+.nav {
+    width: 250px; /* Width of the navbar when not collapsed */
+    transition: width 0.3s ease;
+}
+
+.nav--collapsed {
+    width: 80px; /* Width of the navbar when collapsed */
+}
+
+.search-sidebar {
+    position: fixed;
+    top: 0;
+    left: -300px; /* Initially off-screen */
+    width: 300px;
+    height: 100%;
+    background-color: #fff;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.5);
+    transition: transform 0.3s ease, left 0.3s ease;
+    z-index: 10000; /* Ensure it's on top of other content */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.search-sidebar--open {
+    left: 80px; /* Align with the collapsed navbar */
+}
+
+.search-sidebar__content {
+    width: 100%;
+    padding-top: 20px;
+}
+
+.search-sidebar input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 20px;
+    font-size: 1.2em;
+}
+
+.close-sidebar {
+    margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    border: 1px solid #333;
+    background-color: #fff;
+    cursor: pointer;
+}
