@@ -14,7 +14,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 @login_prohibited
 def home(request):
-    return render(request, 'home.html')
+    return render(request, 'index.html')
 
 @login_required
 def dashboard(request):
