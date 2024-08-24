@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import FormView, View, UpdateView
 from django.contrib.auth import login, logout
 from .forms import SignUpForm, LogInForm, ConfirmPasswordForm, UserForm
-from .models import User
+from .models import User, Follower
 from django.urls import reverse
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
@@ -92,7 +92,7 @@ def log_out(request):
 
 @login_required
 def view_profile(request):
-    return render(request, 'view-profile.html',{'user': request.user})
+    return render(request, 'view-profile.html',{'user': request.user, 'followers': Follower.objects.filter(current_user = request.user)})
 
 class DeleteAccountView(LoginRequiredMixin, FormView):
     

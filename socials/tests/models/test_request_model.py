@@ -7,7 +7,8 @@ class FollowRequestModelTestCase(TestCase):
     fixtures = [
         'socials/tests/fixtures/default_user.json',
         'socials/tests/fixtures/other_users.json',
-        'socials/tests/fixtures/default_request.json'
+        'socials/tests/fixtures/default_request.json',
+        'socials/tests/fixtures/default_follower.json'
     ]
     
     def setUp(self):
@@ -77,3 +78,18 @@ class FollowRequestModelTestCase(TestCase):
         
         after_count  = Friendship.objects.count()
         self.assertEquals(before_count + 1, after_count)
+        
+    def test_cannot_request_exisiting_follower(self):
+        self.current_user = User.objects.get(username = 'petrapickles')
+        self.follower = User.objects.get(username='peterpickles')
+        before_count = FollowRequest.objects.count()
+        try:
+            FollowRequest.objects.create(
+                from_user = self.follower,
+                to_user = self.current_user
+            )
+        except:
+            pass
+        
+        after_count = FollowRequest.objects.count()
+        self.assertEqual(before_count,after_count)

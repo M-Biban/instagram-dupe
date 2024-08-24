@@ -1,0 +1,10 @@
+[
+    {
+      "model": "socials.follower",
+      "pk": 1,
+      "fields": {
+        "current_user": 3,
+        "follower": 4
+      }
+    }
+]

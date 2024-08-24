@@ -1,10 +1,11 @@
 from django.core.management.base import BaseCommand, CommandError
 
-from socials.models import User
+from socials.models import User, Follower
 
 import pytz
 from faker import Faker
 from random import randint, random
+import random
 
 user_fixtures = [
     {'username': 'johndoe', 'email': 'john.doe@example.org', 'first_name': 'John', 'last_name': 'Doe'},
@@ -16,9 +17,10 @@ user_fixtures = [
 class Command(BaseCommand):
     """Build automation command to seed the database."""
 
-    USER_COUNT = 300
+    USER_COUNT = 30
     DEFAULT_PASSWORD = 'Password123'
     help = 'Seeds the database with sample data'
+    FRIEND_COUNT = 100
 
     def __init__(self):
         self.faker = Faker('en_GB')
@@ -26,6 +28,7 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         self.create_users()
         self.users = User.objects.all()
+        self.try_create_followers()
 
     def create_users(self):
         self.generate_user_fixtures()
@@ -64,6 +67,32 @@ class Command(BaseCommand):
             first_name=data['first_name'],
             last_name=data['last_name'],
         )
+        
+    def get_random_user(self):
+        index = random.randint(0, self.users.count() - 1)
+        return self.users[index]
+        
+    """Create followers"""
+    def try_create_followers(self):
+        for i in range(self.FRIEND_COUNT):
+            try:
+                self.create_follower()
+            except:
+                print("Fail")
+                pass
+        print("Follower seeding complete.   ")
+        
+    def create_follower(self):
+            follower = self.get_random_user()
+            followee = self.get_random_user()
+            print(follower.username)
+            print(followee.username)
+            Follower.objects.create(
+                follower = follower,
+                current_user = followee
+            )
+            
+            
 
 def create_username(first_name, last_name):
     return first_name.lower() + last_name.lower()
