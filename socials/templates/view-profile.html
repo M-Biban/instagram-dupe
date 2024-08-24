@@ -7,8 +7,40 @@
     <p>Email: {{user.email}}</p>
     <a href='{% url 'delete-profile' %}' class="btn">Delete profile</a>
     <a href='{% url 'edit-profile' %}' class="btn">Edit profile</a>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#followerModal">
+      Launch demo modal
+    </button>
+    <img src="{{user.profile_pic.url}}" alt='profile picture'>
     {% for follower in followers %}
     <p>hwy {{follower.follower.username}}</p>
     {% endfor %}
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="followerModal" tabindex="-1" aria-labelledby="followerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="followerModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Lorem ipsum odor amet, consectetuer adipiscing elit. Lacus dis nullam suscipit felis efficitur amet. Ligula taciti placerat scelerisque platea praesent dolor sit. Facilisi non vulputate laoreet penatibus etiam conubia porttitor. Mus nam sodales praesent amet duis gravida laoreet tempus. Dis fringilla neque vivamus adipiscing sociosqu tristique feugiat.
+
+Donec curabitur molestie himenaeos tempus egestas. Nibh gravida nullam metus sapien purus volutpat etiam. Pharetra natoque ad velit porta luctus. Gravida integer aenean risus placerat nulla sociosqu elit. Eu tristique ornare tincidunt posuere; massa consequat nascetur. Curabitur nec natoque id elit tristique eu congue. Pretium consectetur sociosqu ante commodo commodo.
+
+Hac vehicula nunc aenean pretium felis. Laoreet sollicitudin vehicula purus habitant volutpat nam cursus venenatis laoreet. Suscipit praesent turpis tortor aenean faucibus quam platea. Eleifend fermentum vestibulum suspendisse pulvinar suspendisse; maecenas nostra. Aliquet habitant sodales arcu aliquam odio fermentum fusce dictumst consequat. Metus dui mattis velit et vehicula fusce dolor facilisi elementum. Rhoncus dapibus nostra feugiat orci himenaeos eros sagittis felis.
+
+Habitant aliquet rhoncus nunc ultricies tellus laoreet pulvinar convallis. Potenti vulputate nascetur ut proin sociosqu mi duis a. Placerat dignissim erat posuere finibus lectus nam facilisi hendrerit efficitur. Vulputate nullam senectus fermentum consequat, litora sociosqu. Nec habitant laoreet leo velit nec molestie lacus. Enim inceptos blandit fames quam ullamcorper hac sagittis platea. Fermentum tincidunt ligula ornare; ultricies sit id? Taciti ultricies viverra diam porta ante.
+
+Potenti primis rutrum pretium gravida lobortis. Platea eget inceptos ultricies nunc nunc habitasse taciti et ornare! Laoreet semper accumsan amet; condimentum rutrum mollis condimentum. Tempor suspendisse enim turpis eros massa, luctus molestie aenean. Molestie nisl platea convallis; orci vehicula purus massa. Ultricies sagittis lacinia erat ut venenatis. Ullamcorper odio libero sed justo nec natoque. Nullam consequat nisl et curabitur; conubia dictum.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
 </div>
 {%endblock%}

@@ -15,3 +15,4 @@ class Follower(models.Model):
         if self.current_user == self.follower:
             raise ValidationError("You can't follow yourself!")
         super().save(*args, **kwargs)
+        

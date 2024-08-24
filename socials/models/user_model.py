@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import RegexValidator
+from django.conf import settings
 
 # Create your models here.
 class User(AbstractUser):
@@ -20,6 +21,7 @@ class User(AbstractUser):
                                     message = 'Please enter a valid last name'
                                 )])
     email = models.EmailField(unique=True, blank=False)
+    profile_pic = models.ImageField(upload_to = 'profile_pictures', default='default_things/default_profile_image.jpg')
     
     class Meta:
         """Model options."""

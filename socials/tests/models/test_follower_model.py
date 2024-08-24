@@ -1,4 +1,4 @@
-"""Unit tests for the follower model"""
+"""Unit tests for the friendship model"""
 from django.test import TestCase
 from socials.models import FollowRequest, User, Friendship, Follower
 
