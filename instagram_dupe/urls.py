@@ -29,7 +29,9 @@ urlpatterns = [
     path('log-out/', views.log_out, name='log-out'),
     path('view-profile/', views.view_profile, name='view-profile'),
     path('delete-profile/', views.DeleteAccountView.as_view(), name='delete-profile'),
-    path('edit-profile/', views.ProfileUpdateView.as_view(), name='edit-profile')
+    path('edit-profile/', views.ProfileUpdateView.as_view(), name='edit-profile'),
+    path('delete-follower/<int:pk>/', views.FollowerDeleteView.as_view(), name='delete-follower'),
+    path('remove-follower/<int:pk>/', views.RemoveFollowerView.as_view(), name="remove-follower"),
 ]
 
 urlpatterns += static(

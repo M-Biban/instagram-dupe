@@ -1,15 +1,15 @@
 # socials/views.py
 from django.shortcuts import render, redirect
-from django.views.generic import FormView, View, UpdateView
+from django.views.generic import FormView, View, UpdateView, DeleteView
 from django.contrib.auth import login, logout
 from .forms import SignUpForm, LogInForm, ConfirmPasswordForm, UserForm
 from .models import User, Follower
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from socials.helpers import login_prohibited
 from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
+from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 @login_prohibited
@@ -45,6 +45,14 @@ class LoginProhibitedMixin:
             )
         else:
             return self.redirect_when_logged_in_url
+        
+class UserObjectAuthentication:
+    """Mixin that raises permission denied if the user tries to access an object they are not the owner of"""
+    def dispatch(self, request, *args, **kwargs):
+        object = self.get_object()
+        if object.user != request.user:
+            raise PermissionDenied("You cannot access this page as you're not logged in as the correct user.")
+        return super().dispatch(request, *args, **kwargs)
 
 class SignUpView(LoginProhibitedMixin, FormView):
     form_class = SignUpForm
@@ -92,7 +100,7 @@ def log_out(request):
 
 @login_required
 def view_profile(request):
-    return render(request, 'view-profile.html',{'user': request.user, 'followers': Follower.objects.filter(current_user = request.user)})
+    return render(request, 'view-profile.html',{'user': request.user, 'followers': Follower.objects.filter(user = request.user), 'following':Follower.objects.filter(follower = request.user)})
 
 class DeleteAccountView(LoginRequiredMixin, FormView):
     
@@ -132,3 +140,41 @@ class ProfileUpdateView(LoginRequiredMixin, UpdateView):
         """Return redirect URL after successful update."""
         messages.add_message(self.request, messages.SUCCESS, "Profile updated!")
         return reverse(settings.REDIRECT_URL_WHEN_LOGGED_IN)
+    
+    
+    
+class FollowerDeleteView(LoginRequiredMixin, UserObjectAuthentication, DeleteView):
+    """View to delete followers"""
+    
+    model = Follower
+    
+    def get_object(self, queryset=None):
+        """Get follower to be deleted"""
+        follower_pk = self.kwargs.get('pk')
+        follower = Follower.objects.get(pk=follower_pk)
+        return follower
+    
+    def get_success_url(self):
+        """Redirect to my_entries on successful form submission"""
+        messages.add_message(self.request, messages.SUCCESS, "Follower deleted successfully!")
+        return reverse('view-profile') 
+    
+class RemoveFollowerView(LoginRequiredMixin, DeleteView):
+    model = Follower
+    
+    def get_object(self, queryset=None):
+        """Get follower to be deleted"""
+        follower_pk = self.kwargs.get('pk')
+        follower = Follower.objects.get(pk=follower_pk)
+        return follower
+    
+    def get_success_url(self):
+        """Redirect to my_entries on successful form submission"""
+        messages.add_message(self.request, messages.SUCCESS, "Follower removed successfully!")
+        return reverse('view-profile') 
+    
+    def dispatch(self, request, *args, **kwargs):
+        object = self.get_object()
+        if object.follower != request.user:
+            raise PermissionDenied("You cannot access this page as you're not logged in as the correct user.")
+        return super().dispatch(request, *args, **kwargs)

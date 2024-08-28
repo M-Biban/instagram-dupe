@@ -89,7 +89,7 @@ class Command(BaseCommand):
             print(followee.username)
             Follower.objects.create(
                 follower = follower,
-                current_user = followee
+                user = followee
             )
             
             

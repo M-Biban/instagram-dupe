@@ -12,6 +12,6 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterUniqueTogether(
             name='follower',
-            unique_together={('current_user', 'follower')},
+            unique_together={('user', 'follower')},
         ),
     ]

@@ -60,13 +60,13 @@ class FollowRequestModelTestCase(TestCase):
         self.user1 = User.objects.get(username = "janedoe")
         self.user2 = User.objects.get(username="petrapickles")
         before_count = Friendship.objects.count()
-        Follower.objects.create(current_user=self.user1, follower=self.user2)
+        Follower.objects.create(user=self.user1, follower=self.user2)
         
         # Ensure that no friendship exists yet
         self.assertFalse(Friendship.objects.filter(user1=self.user1, user2=self.user2).exists())
         
         # User2 follows User1
-        Follower.objects.create(current_user=self.user2, follower=self.user1)
+        Follower.objects.create(user=self.user2, follower=self.user1)
         
         # Now they should be friends
         self.assertTrue(Friendship.objects.filter(user1=self.user1, user2=self.user2).exists())
@@ -80,13 +80,13 @@ class FollowRequestModelTestCase(TestCase):
         self.assertEquals(before_count + 1, after_count)
         
     def test_cannot_request_exisiting_follower(self):
-        self.current_user = User.objects.get(username = 'petrapickles')
+        self.user = User.objects.get(username = 'petrapickles')
         self.follower = User.objects.get(username='peterpickles')
         before_count = FollowRequest.objects.count()
         try:
             FollowRequest.objects.create(
                 from_user = self.follower,
-                to_user = self.current_user
+                to_user = self.user
             )
         except:
             pass

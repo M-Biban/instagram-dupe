@@ -12,7 +12,7 @@ class FollowRequest(models.Model):
     accepted = models.BooleanField(default=False)
     
     def save(self, *args, **kwargs):
-        if Follower.objects.filter(follower=self.from_user, current_user=self.to_user).exists():
+        if Follower.objects.filter(follower=self.from_user, user=self.to_user).exists():
             raise ValidationError("This follower relationship already exists.")
         if self.from_user == self.to_user:
             raise ValidationError("You can't follow yourself!")
@@ -22,7 +22,7 @@ class FollowRequest(models.Model):
     def accept_request(self):
         self.accepted = True
         Follower.objects.create(
-            current_user = self.from_user,
+            user = self.from_user,
             follower = self.to_user
         )
         self.delete()

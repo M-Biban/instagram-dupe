@@ -11,14 +11,14 @@ class FriendshipModelTestCase(TestCase):
     ]
     
     def setUp(self):
-        self.current_user = User.objects.get(username='petrapickles')
+        self.user = User.objects.get(username='petrapickles')
         self.follower = User.objects.get(username = 'peterpickles')
-        self.followers = Follower.objects.get(current_user = self.current_user,
+        self.followers = Follower.objects.get(user = self.user,
                                              follower = self.follower)
         
-    def test_on_delete_cascade_current_user(self):
+    def test_on_delete_cascade_user(self):
         before_count = self.get_count()
-        self.current_user.delete()
+        self.user.delete()
         after_count = self.get_count()
         self.assertEquals(before_count-1, after_count)
         
@@ -32,7 +32,7 @@ class FriendshipModelTestCase(TestCase):
         before_count = self.get_count()
         try:
             Follower.objects.create(
-                current_user = self.current_user,
+                user = self.user,
                 follower = self.follower
             )
         except:
@@ -43,20 +43,20 @@ class FriendshipModelTestCase(TestCase):
         before_count = self.get_count()
         try:
             Follower.objects.create(
-                current_user = self.follower,
-                follower = self.current_user
+                user = self.follower,
+                follower = self.user
             )
         except:
             pass
         self.assertEquals(before_count+1, self.get_count())
-        self.assertTrue(Friendship.objects.filter(user1=self.current_user, user2=self.follower).exists())
+        self.assertTrue(Friendship.objects.filter(user1=self.user, user2=self.follower).exists())
         
     def test_cannot_follow_yourself(self):
         before_count = self.get_count()
         try:
             Follower.objects.create(
-                current_user = self.current_user,
-                follower = self.current_user
+                user = self.user,
+                follower = self.user
             )
         except:
             pass
