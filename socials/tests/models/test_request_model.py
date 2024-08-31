@@ -14,7 +14,9 @@ class FollowRequestModelTestCase(TestCase):
     def setUp(self):
         self.user = User.objects.get(username='johndoe')
         self.other = User.objects.get(username='peterpickles')
-        self.request = FollowRequest.objects.get(from_user = self.other, to_user = self.user)
+        self.user.private = True
+        self.other.private = True
+        self.request = FollowRequest.objects.create(from_user = self.other, to_user = self.user)
         
     def test_accept_request(self):
         before_count_friendship = Friendship.objects.count()
@@ -30,6 +32,7 @@ class FollowRequestModelTestCase(TestCase):
         
     def test_default_accepted_value_is_false(self):
         before_count = Follower.objects.count()
+        self.other.private = True
         request = FollowRequest.objects.create(
             from_user = self.user,
             to_user = self.other
@@ -48,7 +51,7 @@ class FollowRequestModelTestCase(TestCase):
         before_count = FollowRequest.objects.count()
         self.user.delete()
         after_count = FollowRequest.objects.count()
-        self.assertEquals(before_count - 1, after_count)
+        self.assertEquals(before_count - 2, after_count)
         
     def test_decline_request(self):
         before_count = FollowRequest.objects.count()

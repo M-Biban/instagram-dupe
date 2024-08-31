@@ -67,7 +67,11 @@
     {% comment %} Search sidebar {% endcomment %}
     <div class="search-sidebar" id="searchSidebar">
         <div class="search-sidebar__content">
-            <input type="text" placeholder="Search...">
+            <form id="searchForm">
+                {% csrf_token %}
+                <input type="text" id="searchInput" placeholder="Search..." name="query">
+            </form>
+            <div id="searchResults"></div> 
             <button class="close-sidebar" id="closeSidebar">Close</button>
         </div>
     </div>
@@ -79,6 +83,10 @@
             const searchLink = document.querySelector(".nav__link--search");
             const searchSidebar = document.getElementById("searchSidebar");
             const closeSidebar = document.getElementById("closeSidebar");
+            const searchResults = document.getElementById('searchResults')
+            const searchInput = document.getElementById('searchInput')
+            const searchForm = document.getElementById("searchForm");
+
         
             if (searchLink) {
                 searchLink.addEventListener("click", (e) => {
@@ -89,6 +97,7 @@
             }
         
             if (closeSidebar) {
+                console.log("here")
                 closeSidebar.addEventListener("click", () => {
                     searchSidebar.classList.remove("search-sidebar--open"); // Close the search sidebar
                     nav.classList.toggle("nav--collapsed");
@@ -102,6 +111,52 @@
                     console.log("Collapsed class toggled:", nav.classList.contains("nav--collapsed"));
                 });
             }
+
+        // Handle AJAX search
+        searchForm.addEventListener("submit", function(e) {
+            e.preventDefault(); // Prevent the default form submission
+
+            // Fetch query from the input
+            const query = searchInput.value.trim();
+
+            if (query.length > 0) {
+                fetch(`/search/?query=${encodeURIComponent(query)}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest', // Identify the request as AJAX
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Update the search results in the sidebar
+                    searchResults.innerHTML = '';
+
+                    if (data.results && data.results.length > 0) {
+                        data.results.forEach(result => {
+                            const resultItem = document.createElement('div');
+                            resultItem.className = 'search-result-item';
+                            resultItem.innerHTML = `
+                            <div class="card" style="width: 100%">
+                            <div class="card-body d-flex align-items-center">
+                                <img src=${result.profile_pic} alt='profile picture'class="img-thumbnail" style="width: 2.5em; height: 2.5em; border-radius: 50%;">
+                                <div class = "container">
+                                <h5 class="card-title">${result.username}</h5> 
+                                <p>${result.first_name} ${result.last_name}</p>
+                                </div>
+                            </div>
+                            </div>`
+                            searchResults.appendChild(resultItem);
+                        });
+                    } else {
+                        searchResults.innerHTML = '<p>No results found</p>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching search results:', error);
+                });
+            }
+        });
         });
         
           

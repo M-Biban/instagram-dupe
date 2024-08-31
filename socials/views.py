@@ -1,6 +1,6 @@
 # socials/views.py
 from django.shortcuts import render, redirect
-from django.views.generic import FormView, View, UpdateView, DeleteView
+from django.views.generic import FormView, View, UpdateView, DeleteView, ListView
 from django.contrib.auth import login, logout
 from .forms import SignUpForm, LogInForm, ConfirmPasswordForm, UserForm
 from .models import User, Follower
@@ -11,6 +11,9 @@ from socials.helpers import login_prohibited
 from django.conf import settings
 from django.core.exceptions import ImproperlyConfigured, PermissionDenied
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.db.models import Q 
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
 
 @login_prohibited
 def home(request):
@@ -178,3 +181,19 @@ class RemoveFollowerView(LoginRequiredMixin, DeleteView):
         if object.follower != request.user:
             raise PermissionDenied("You cannot access this page as you're not logged in as the correct user.")
         return super().dispatch(request, *args, **kwargs)
+    
+@csrf_exempt    
+def search_view(request):
+    query = request.GET.get('query', '')
+    results = []
+    
+    if query:
+        results = User.objects.filter(Q(username__icontains=query) | Q(first_name__icontains=query)  | Q(last_name__icontains=query)).values('id', 'first_name', 'profile_pic', 'username')
+        
+    results = list(results)
+        
+    for result in results:
+        result['profile_pic'] = settings.MEDIA_URL + result['profile_pic']
+        
+    return JsonResponse({'results': list(results)})    
+    

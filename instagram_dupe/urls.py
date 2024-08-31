@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from socials import views
+from socials import views, context_processors
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -32,6 +32,7 @@ urlpatterns = [
     path('edit-profile/', views.ProfileUpdateView.as_view(), name='edit-profile'),
     path('delete-follower/<int:pk>/', views.FollowerDeleteView.as_view(), name='delete-follower'),
     path('remove-follower/<int:pk>/', views.RemoveFollowerView.as_view(), name="remove-follower"),
+    path('search/', views.search_view, name='search')
 ]
 
 urlpatterns += static(
