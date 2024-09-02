@@ -5,7 +5,7 @@ from django.urls import reverse
 from socials.tests.helpers import reverse_with_next
 
 class DashboardViewTestCase(TestCase):
-    """Unit tests for Sign Up View."""
+    """Unit tests for Dashboard View."""
 
     fixtures = [
         'socials/tests/fixtures/default_user.json'

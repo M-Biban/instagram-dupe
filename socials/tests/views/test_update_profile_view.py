@@ -7,7 +7,7 @@ from socials.models import User
 from socials.tests.helpers import reverse_with_next
 
 class EditProfileViewTest(TestCase):
-    """Unit tests for the Profile View"""
+    """Unit tests for the Edit Profile View"""
 
     fixtures = [
         'socials/tests/fixtures/default_user.json',

@@ -9,7 +9,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.conf import settings
 
 class LogInViewTestCase(TestCase):
-    """Unit tests for Sign Up View."""
+    """Unit tests for Log In View."""
 
     fixtures = [
         'socials/tests/fixtures/default_user.json',
