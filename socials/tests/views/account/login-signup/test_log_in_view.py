@@ -1,12 +1,7 @@
 """Unit tests for the LogInView."""
-from django.core.exceptions import ValidationError
 from django.test import TestCase
 from socials.models import User
 from django.urls import reverse
-from socials.forms import LogInForm
-from socials.views import LogInView, LoginProhibitedMixin
-from django.core.exceptions import ImproperlyConfigured
-from django.conf import settings
 
 class LogInViewTestCase(TestCase):
     """Unit tests for Log In View."""
