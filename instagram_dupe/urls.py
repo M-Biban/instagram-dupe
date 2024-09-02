@@ -15,8 +15,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
-from socials import views, context_processors
+from django.urls import path
+from socials import views
 from django.conf.urls.static import static
 from django.conf import settings
 
@@ -28,11 +28,12 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('log-out/', views.log_out, name='log-out'),
     path('view-profile/', views.view_profile, name='view-profile'),
-    path('delete-profile/', views.DeleteAccountView.as_view(), name='delete-profile'),
-    path('edit-profile/', views.ProfileUpdateView.as_view(), name='edit-profile'),
-    path('delete-follower/<int:pk>/', views.FollowerDeleteView.as_view(), name='delete-follower'),
+    path('delete-profile/', views.DeleteProfileView.as_view(), name='delete-profile'),
+    path('edit-profile/', views.EditProfileView.as_view(), name='edit-profile'),
+    path('delete-follower/<int:pk>/', views.DeleteFollowerView.as_view(), name='delete-follower'),
     path('remove-follower/<int:pk>/', views.RemoveFollowerView.as_view(), name="remove-follower"),
-    path('search/', views.search_view, name='search')
+    path('search/', views.search_view, name='search'),
+    path('view_user/<int:pk>/', views.ViewUserView.as_view(), name='view_user')
 ]
 
 urlpatterns += static(

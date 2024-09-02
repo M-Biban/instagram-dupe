@@ -26,7 +26,7 @@ class ViewProfileViewTestCase(TestCase):
     def test_logged_in_user(self):
         self.client.login(username=self.user.username, password='Password123')
         response = self.client.get(self.url)
-        self.assertTemplateUsed(response, 'view-profile.html')
+        self.assertTemplateUsed(response, 'account/view-profile.html')
         user = response.context['user']
         self.assertEquals(self.user, user)
         

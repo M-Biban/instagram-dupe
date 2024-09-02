@@ -29,7 +29,7 @@ class AccountDeleteViewTestCase(TestCase):
     def test_correct_template(self):
         self.client.login(username=self.user.username, password='Password123')
         response = self.client.get(self.url)
-        self.assertTemplateUsed(response, 'delete-profile.html')
+        self.assertTemplateUsed(response, 'account/delete-profile.html')
         
     def test_correct_form_class(self):
         self.client.login(username=self.user.username, password='Password123')

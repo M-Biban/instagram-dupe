@@ -1,4 +1,4 @@
-{% extends 'base_content.html' %}
+{% extends 'base/base_content.html' %}
 {% block content %}
 <div class="container">
   <div class="row d-flex align-items-center">
@@ -30,12 +30,14 @@
         {% for follower in followers %}
         <div class="card" style="width: 100%">
           <div class="card-body d-flex align-items-center">
+            <a href={% url 'view_user' pk=follower.follower.pk %} class="btn d-flex align-items-center">
               <img src="{{follower.follower.profile_pic.url}}" alt='profile picture'class="img-thumbnail" style="width: 40px; height: 40px; border-radius: 50%;">
               <h5 class="card-title">{{follower.follower.username}}</h5>
               <form method="POST" action="{% url 'delete-follower' pk=follower.pk %}">
                 {% csrf_token %}
                 <button type="submit" class="btn">Remove</button>
             </form>
+          </a>
             
           </div>
         </div>
@@ -57,12 +59,14 @@
         {% for follow in following %}
         <div class="card" style="width: 100%">
           <div class="card-body d-flex align-items-center">
+            <a href={% url 'view_user' pk=follow.user.pk %} class="btn d-flex align-items-center">
               <img src="{{follow.user.profile_pic.url}}" alt='profile picture'class="img-thumbnail" style="width: 2.5em; height: 2.5em; border-radius: 50%;">
               <h5 class="card-title">{{follow.user.username}}</h5>
               <form method="POST" action="{% url 'remove-follower' pk=follow.pk %}">
                 {% csrf_token %}
                 <button type="submit" class="btn">Remove</button>
             </form>
+          </a>
           </div>
         </div>
         {% endfor %}

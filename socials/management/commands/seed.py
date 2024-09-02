@@ -66,11 +66,13 @@ class Command(BaseCommand):
             password=Command.DEFAULT_PASSWORD,
             first_name=data['first_name'],
             last_name=data['last_name'],
+            private = random.choice([True, False])
         )
         
     def get_random_user(self):
         index = random.randint(0, self.users.count() - 1)
         return self.users[index]
+    
         
     """Create followers"""
     def try_create_followers(self):
