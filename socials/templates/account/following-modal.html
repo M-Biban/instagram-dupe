@@ -17,6 +17,10 @@
                   {% csrf_token %}
                   <button type="submit" class="btn">Remove</button>
               </form>
+              <form method="POST" action="{% url 'create-follow-request' pk=follow.user.pk %}">
+                {% csrf_token %}
+                <button type="submit" class="btn">follow</button>
+            </form>
             </a>
             </div>
           </div>

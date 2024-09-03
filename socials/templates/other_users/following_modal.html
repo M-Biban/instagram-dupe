@@ -13,6 +13,10 @@
               <a href={% url 'view_user' pk=follow.user.pk %} class="btn d-flex align-items-center">
                 <img src="{{follow.user.profile_pic.url}}" alt='profile picture'class="img-thumbnail" style="width: 2.5em; height: 2.5em; border-radius: 50%;">
                 <h5 class="card-title">{{follow.user.username}}</h5>
+                <form method="POST" action="{% url 'create-follow-request' pk=follow.user.pk %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn">follow</button>
+              </form>
               </a>
               </div>
           </div>

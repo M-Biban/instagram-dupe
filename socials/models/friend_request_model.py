@@ -14,6 +14,8 @@ class FollowRequest(models.Model):
     def save(self, *args, **kwargs):
         if Follower.objects.filter(follower=self.from_user, user=self.to_user).exists():
             raise ValidationError("This follower relationship already exists.")
+        if FollowRequest.objects.filter(from_user = self.from_user, to_user = self.to_user).exists():
+            raise ValidationError("Already requested")
         if self.from_user == self.to_user:
             raise ValidationError("You can't follow yourself!")
         super().save(*args, **kwargs)

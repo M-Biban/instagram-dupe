@@ -1,9 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView
-from socials.models import User, Follower
+from django.views.generic import DetailView, CreateView
+from socials.models import User, Follower, FollowRequest
 from django.http import HttpResponseRedirect
-from django.core.exceptions import PermissionDenied
+from django.core.exceptions import PermissionDenied, ValidationError
 from django.urls import reverse
+from django.contrib import messages
+from django.shortcuts import get_object_or_404, redirect
 
 class ViewUserView(LoginRequiredMixin, DetailView):
     model = User
@@ -27,3 +29,19 @@ class ViewUserView(LoginRequiredMixin, DetailView):
         context['user_is_following'] = Follower.objects.filter(follower = profile_user)
         
         return context
+    
+def create_follow_request(request, pk):
+    if request.method == "POST":
+        user_to_follow = get_object_or_404(User, pk=pk)
+        try:
+            FollowRequest.objects.create(
+                from_user = request.user,
+                to_user = user_to_follow
+            )
+            messages.success(request, f'Follow request sent to {user_to_follow.username}')
+        except ValidationError as e:
+            messages.error(request, str(e))
+            
+    return redirect(request.META.get('HTTP_REFERER', reverse('dashboard')))
+    
+    
