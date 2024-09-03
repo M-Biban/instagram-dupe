@@ -11,7 +11,8 @@ from socials.models import User, Follower
 @login_required
 def view_profile(request):
     return render(request, 'account/view-profile.html',{'user': request.user, 'followers': Follower.objects.filter(user = request.user), 'following':Follower.objects.filter(follower = request.user),
-                                                        'following_user_list': Follower.objects.filter(follower=request.user).values_list('user', flat=True)})
+                                                        'following_user_list': Follower.objects.filter(follower=request.user).values_list('user', flat=True),
+                                                        'follower_user_list': Follower.objects.filter(user=request.user).values_list('follower', flat=True)})
 
 class DeleteProfileView(LoginRequiredMixin, FormView):
     

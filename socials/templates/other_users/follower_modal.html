@@ -13,10 +13,16 @@
               <a href={% url 'view_user' pk=follower.follower.pk %} class="btn d-flex align-items-center">
                 <img src="{{follower.follower.profile_pic.url}}" alt='profile picture'class="img-thumbnail" style="width: 40px; height: 40px; border-radius: 50%;">
                 <h5 class="card-title">{{follower.follower.username}}</h5>
-                <form method="POST" action="{% url 'create-follow-request' pk=follower.follower.pk %}">
-                  {% csrf_token %}
-                  <button type="submit" class="btn">follow</button>
-              </form>
+              {% if follower.follower.pk not in following_user_list and follower.follower.pk != user.pk%}
+              <form method="POST" action="{% url 'create-follow-request' pk=follower.follower.pk %}">
+                {% csrf_token %}
+                {% if follower.follower.pk not in follower_user_list %}
+                <button type="submit" class="btn">Follow</button>
+                {%else%}
+                <button type="submit" class="btn">Follow back</button>
+                {% endif %}
+            </form>
+            {% endif %}
               </a>
             </div>
           </div>

@@ -27,6 +27,9 @@ class ViewUserView(LoginRequiredMixin, DetailView):
         context['profile_user'] = profile_user
         context['user_followers'] = Follower.objects.filter(user = profile_user)
         context['user_is_following'] = Follower.objects.filter(follower = profile_user)
+        context['following_user_list']= Follower.objects.filter(follower=self.request.user).values_list('user', flat=True)
+        context['follower_user_list']= Follower.objects.filter(user=self.request.user).values_list('follower', flat=True)
+        context['user'] = self.request.user
         
         return context
     
