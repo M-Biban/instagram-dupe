@@ -24,8 +24,8 @@ class FollowRequest(models.Model):
     def accept_request(self):
         self.accepted = True
         Follower.objects.create(
-            user = self.from_user,
-            follower = self.to_user
+            user = self.to_user,
+            follower = self.from_user
         )
         self.delete()
         

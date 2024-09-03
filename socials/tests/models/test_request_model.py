@@ -7,7 +7,6 @@ class FollowRequestModelTestCase(TestCase):
     fixtures = [
         'socials/tests/fixtures/default_user.json',
         'socials/tests/fixtures/other_users.json',
-        'socials/tests/fixtures/default_request.json',
         'socials/tests/fixtures/default_follower.json'
     ]
     
@@ -45,13 +44,13 @@ class FollowRequestModelTestCase(TestCase):
         before_count = FollowRequest.objects.count()
         self.other.delete()
         after_count = FollowRequest.objects.count()
-        self.assertEquals(before_count - 2, after_count)
+        self.assertEquals(before_count - 1, after_count)
         
     def test_to_user_delete_on_cascade(self):
         before_count = FollowRequest.objects.count()
         self.user.delete()
         after_count = FollowRequest.objects.count()
-        self.assertEquals(before_count - 2, after_count)
+        self.assertEquals(before_count - 1, after_count)
         
     def test_decline_request(self):
         before_count = FollowRequest.objects.count()

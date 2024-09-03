@@ -6,6 +6,7 @@ from django.core.exceptions import PermissionDenied, ValidationError
 from django.urls import reverse
 from django.contrib import messages
 from django.shortcuts import get_object_or_404, redirect
+from django.contrib.auth.decorators import login_required
 
 class ViewUserView(LoginRequiredMixin, DetailView):
     model = User
@@ -33,6 +34,7 @@ class ViewUserView(LoginRequiredMixin, DetailView):
         
         return context
     
+@login_required
 def create_follow_request(request, pk):
     if request.method == "POST":
         user_to_follow = get_object_or_404(User, pk=pk)
@@ -44,6 +46,8 @@ def create_follow_request(request, pk):
             messages.success(request, f'Follow request sent to {user_to_follow.username}')
         except ValidationError as e:
             messages.error(request, str(e))
+    else:
+        messages.warning(request, "Invalid request method.")
             
     return redirect(request.META.get('HTTP_REFERER', reverse('dashboard')))
     

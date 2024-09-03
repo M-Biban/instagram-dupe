@@ -34,7 +34,8 @@ urlpatterns = [
     path('remove-follower/<int:pk>/', views.RemoveFollowerView.as_view(), name="remove-follower"),
     path('search/', views.search_view, name='search'),
     path('view_user/<int:pk>/', views.ViewUserView.as_view(), name='view_user'),
-    path('create-follow-request/<int:pk>/', views.create_follow_request, name="create-follow-request")
+    path('create-follow-request/<int:pk>/', views.create_follow_request, name="create-follow-request"),
+    path('follow-requests/', views.FollowRequestsView.as_view(), name="follow-requests")
 ]
 
 urlpatterns += static(

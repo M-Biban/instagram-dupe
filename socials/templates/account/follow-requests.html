@@ -1,0 +1,25 @@
+{% extends 'base/base_content.html' %}
+{% block content %}
+<h1> Follow Requests recieved: </h1>
+{% for request in recieved_requests %}
+<div class="card" style="width: 100%">
+    <div class="card-body d-flex align-items-center">
+      <a href={% url 'view_user' pk=request.from_user.pk %} class="btn d-flex align-items-center">
+        <img src="{{request.from_user.profile_pic.url}}" alt='profile picture'class="img-thumbnail" style="width: 2.5em; height: 2.5em; border-radius: 50%;">
+        <h5 class="card-title">{{request.from_user.username}}</h5>
+    </a>
+    </div>
+  </div>
+{% endfor %}
+<h1> Follow Requests sent: </h1>
+{% for request in sent_requests %}
+<div class="card" style="width: 100%">
+    <div class="card-body d-flex align-items-center">
+      <a href={% url 'view_user' pk=request.from_user.pk %} class="btn d-flex align-items-center">
+        <img src="{{request.from_user.profile_pic.url}}" alt='profile picture'class="img-thumbnail" style="width: 2.5em; height: 2.5em; border-radius: 50%;">
+        <h5 class="card-title">{{request.from_user.username}}</h5>
+    </a>
+    </div>
+  </div>
+{% endfor %}
+{% endblock %}
