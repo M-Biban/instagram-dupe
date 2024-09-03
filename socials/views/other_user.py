@@ -11,10 +11,10 @@ class ViewUserView(LoginRequiredMixin, DetailView):
     
     def dispatch(self, request, *args, **kwargs):
         object = self.get_object()
-        following = Follower.objects.filter(follower = request.user)
+        following = Follower.objects.filter(follower = request.user).values_list('user', flat=True)
         if object == request.user:
             return HttpResponseRedirect(reverse('view-profile'))
-        if object.private and object not in following:
+        if object.private and object.pk not in following:
             raise PermissionDenied("You cannot access this page as you're not logged in as the correct user.") #probs change this to something more relevant
         return super().dispatch(request, *args, **kwargs)
     
