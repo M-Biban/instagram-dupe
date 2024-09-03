@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
-          <h1 class="modal-title fs-5" id="followerModalLabel">Modal title</h1>
+          <h1 class="modal-title fs-5" id="followerModalLabel">Followers</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
@@ -17,10 +17,12 @@
                   {% csrf_token %}
                   <button type="submit" class="btn">Remove</button>
               </form>
+              {% if follower.follower.pk not in following_user_list %}
               <form method="POST" action="{% url 'create-follow-request' pk=follower.follower.pk %}">
                 {% csrf_token %}
-                <button type="submit" class="btn">follow</button>
+                <button type="submit" class="btn">Follow back</button>
             </form>
+            {% endif %}
             </a>
             </div>
           </div>
