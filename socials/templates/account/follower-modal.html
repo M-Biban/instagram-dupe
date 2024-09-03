@@ -1,0 +1,27 @@
+<!-- Follower Modal -->
+<div class="modal fade" id="followerModal" tabindex="-1" aria-labelledby="followerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="followerModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% for follower in followers %}
+          <div class="card" style="width: 100%">
+            <div class="card-body d-flex align-items-center">
+              <a href={% url 'view_user' pk=follower.follower.pk %} class="btn d-flex align-items-center">
+                <img src="{{follower.follower.profile_pic.url}}" alt='profile picture'class="img-thumbnail" style="width: 40px; height: 40px; border-radius: 50%;">
+                <h5 class="card-title">{{follower.follower.username}}</h5>
+                <form method="POST" action="{% url 'delete-follower' pk=follower.pk %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn">Remove</button>
+              </form>
+            </a>
+            </div>
+          </div>
+          {% endfor %}
+          </div>
+      </div>
+    </div>
+  </div>
