@@ -7,7 +7,7 @@ from django.urls import reverse
 
 class ViewUserView(LoginRequiredMixin, DetailView):
     model = User
-    template_name = 'view_user.html'
+    template_name = 'other_users/view_user.html'
     
     def dispatch(self, request, *args, **kwargs):
         object = self.get_object()
