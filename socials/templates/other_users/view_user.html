@@ -12,7 +12,8 @@
       {% if profile_user.private and profile_user.pk not in following_user_list %} disabled {% endif %} >
       Followers: {{user_followers.count}}
     </button>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userfollowingModal">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userfollowingModal"
+    {% if profile_user.private and profile_user.pk not in following_user_list %} disabled {% endif %} >
       Following: {{user_is_following.count}}
     </button>
     {% if profile_user.pk in follow_requests_made %}
