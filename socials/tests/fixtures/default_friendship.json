@@ -1,0 +1,11 @@
+[
+    {
+      "model": "socials.friendship",
+      "pk": 1,
+      "fields": {
+        "user1": 1,
+        "user2": 2
+      }
+    }
+]
+  

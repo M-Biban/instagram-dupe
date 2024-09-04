@@ -1,0 +1,39 @@
+<!-- Follower Modal -->
+<div class="modal fade" id="followerModal" tabindex="-1" aria-labelledby="followerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="followerModalLabel">Followers</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          {% for follower in followers %}
+          <div class="card" style="width: 100%">
+            <div class="card-body d-flex align-items-center">
+              <a href={% url 'view_user' pk=follower.follower.pk %} class="btn d-flex align-items-center">
+                <img src="{{follower.follower.profile_pic.url}}" alt='profile picture'class="img-thumbnail" style="width: 40px; height: 40px; border-radius: 50%;">
+                <h5 class="card-title">{{follower.follower.username}}</h5>
+                <form method="POST" action="{% url 'delete-follower' pk=follower.pk %}">
+                  {% csrf_token %}
+                  <button type="submit" class="btn">Remove</button>
+              </form>
+              {% if follower.follower.pk in follow_requests_made %}
+                  <button type="button" class="btn btn-primary" disabled>Pending...</button>
+              {%elif follower.follower.pk not in following_user_list %}
+              <form method="POST" action="{% url 'create-follow-request' pk=follower.follower.pk %}">
+                {% csrf_token %}
+                {% if follower.follower.pk not in follower_user_list %}
+                <button type="submit" class="btn">Follow</button>
+                {%else%}
+                <button type="submit" class="btn">Follow back</button>
+                {% endif %}
+            </form>
+            {% endif %}
+            </a>
+            </div>
+          </div>
+          {% endfor %}
+          </div>
+      </div>
+    </div>
+  </div>

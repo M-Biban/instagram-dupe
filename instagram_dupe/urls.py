@@ -15,8 +15,10 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path
 from socials import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,7 +28,18 @@ urlpatterns = [
     path('dashboard/', views.dashboard, name='dashboard'),
     path('log-out/', views.log_out, name='log-out'),
     path('view-profile/', views.view_profile, name='view-profile'),
-    path('delete-profile/', views.DeleteAccountView.as_view(), name='delete-profile'),
-    path('edit-profile/', views.ProfileUpdateView.as_view(), name='edit-profile')
+    path('delete-profile/', views.DeleteProfileView.as_view(), name='delete-profile'),
+    path('edit-profile/', views.EditProfileView.as_view(), name='edit-profile'),
+    path('delete-follower/<int:pk>/', views.DeleteFollowerView.as_view(), name='delete-follower'),
+    path('remove-follower/<int:pk>/', views.RemoveFollowerView.as_view(), name="remove-follower"),
+    path('search/', views.search_view, name='search'),
+    path('view_user/<int:pk>/', views.ViewUserView.as_view(), name='view_user'),
+    path('create-follow-request/<int:pk>/', views.create_follow_request, name="create-follow-request"),
+    path('follow-requests/', views.FollowRequestsView.as_view(), name="follow-requests"),
+    path('accept-request/<int:pk>/', views.accept_follow_request, name='accept-request'),
+    path('remove-request/<int:pk>/', views.remove_follow_request, name='remove-request')
 ]
 
+urlpatterns += static(
+    settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    )

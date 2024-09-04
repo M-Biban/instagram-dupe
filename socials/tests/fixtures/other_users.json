@@ -34,5 +34,18 @@
         "password": "pbkdf2_sha256$260000$4BNvFuAWoTT1XVU8D6hCay$KqDCG+bHl8TwYcvA60SGhOMluAheVOnF1PMz0wClilc=",
         "is_active": true
       }
+    },
+    {
+      "model": "socials.user",
+      "pk": 5,
+      "fields": {
+        "first_name": "Max",
+        "last_name": "Roberts",
+        "username": "MaxRoberts06",
+        "email": "maxroberts@example.org",
+        "password": "pbkdf2_sha256$260000$4BNvFuAWoTT1XVU8D6hCay$KqDCG+bHl8TwYcvA60SGhOMluAheVOnF1PMz0wClilc=",
+        "is_active": true,
+        "private": true
+      }
     }
   ]
