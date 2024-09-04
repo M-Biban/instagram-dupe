@@ -26,13 +26,13 @@
         </div>
         <span class="nav__label">Search</span>
       </a>
-      <a href="#" class="nav__link">
+      <a href="#" class="nav__link nav__link--messages">
         <div class="nav__icon-container">
             <span class="material-symbols-outlined">
-                explore
+                message
                 </span>
         </div>
-        <span class="nav__label">Explore</span>
+        <span class="nav__label">Messages</span>
       </a>
       <a href="#" class="nav__link">
         <div class="nav__icon-container">
@@ -76,6 +76,14 @@
         </div>
     </div>
 </div>
+{% comment %} Messages sidebar {% endcomment %}
+<div class="messages-sidebar" id="messagesSidebar">
+    <div class="messages-sidebar__content">
+        <div id="messages-user"></div> 
+        <button class="close-messages" id="closeMessages">Close</button>
+    </div>
+</div>
+
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const nav = document.querySelector(".nav");
@@ -86,31 +94,100 @@
             const searchResults = document.getElementById('searchResults')
             const searchInput = document.getElementById('searchInput')
             const searchForm = document.getElementById("searchForm");
+            const messagesSidebar = document.getElementById("messagesSidebar");
+            const messagesUser = document.getElementById("messages-user");
+            const closeMessages = document.getElementById("closeMessages");
+            const messagesLink  =document.querySelector(".nav__link--messages");
 
-        
-            if (searchLink) {
-                searchLink.addEventListener("click", (e) => {
-                    e.preventDefault();
-                    nav.classList.toggle("nav--collapsed"); // Collapse the navbar
-                    searchSidebar.classList.toggle("search-sidebar--open"); // Open the search sidebar
-                });
-            }
-        
-            if (closeSidebar) {
-                console.log("here")
-                closeSidebar.addEventListener("click", () => {
-                    searchSidebar.classList.remove("search-sidebar--open"); // Close the search sidebar
-                    nav.classList.toggle("nav--collapsed");
-                });
+            function collapseNav() {
+                if (!nav.classList.contains("nav--collapsed")) {
+                    nav.classList.add("nav--collapsed");
+                }
             }
 
-         if (navBorder) {
-                navBorder.addEventListener("click", () => {
-                    console.log("Border clicked!");
-                    nav.classList.toggle("nav--collapsed");
-                    console.log("Collapsed class toggled:", nav.classList.contains("nav--collapsed"));
-                });
+            function expandNav() {
+                if (nav.classList.contains("nav--collapsed")) {
+                    nav.classList.remove("nav--collapsed");
+                }
             }
+
+            function areAllSidebarsClosed() {
+                return !searchSidebar.classList.contains("search-sidebar--open") && 
+                       !messagesSidebar.classList.contains("messages-sidebar--open");
+            }
+
+            function closeAllSidebars() {
+                searchSidebar.classList.remove("search-sidebar--open");
+                messagesSidebar.classList.remove("messages-sidebar--open");
+                updateNavState();
+            }
+        
+            // Function to handle the navbar state based on sidebars
+            function updateNavState() {
+                if (areAllSidebarsClosed()) {
+                    expandNav(); // Expand the navbar if all sidebars are closed
+                } else {
+                    collapseNav(); // Collapse the navbar if any sidebar is open
+                }
+            }
+        
+            // Event listener for search link
+    if (searchLink) {
+        searchLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            collapseNav(); // Ensure navbar is collapsed
+            searchSidebar.classList.add("search-sidebar--open"); // Open the search sidebar
+            messagesSidebar.classList.remove("messages-sidebar--open"); // Close the messages sidebar if open
+        });
+    }
+
+    // Event listener for messages link
+    if (messagesLink) {
+        messagesLink.addEventListener("click", (e) => {
+            e.preventDefault();
+            collapseNav(); // Ensure navbar is collapsed
+            messagesSidebar.classList.add("messages-sidebar--open"); // Open the messages sidebar
+            searchSidebar.classList.remove("search-sidebar--open"); // Close the search sidebar if open
+        });
+    }
+
+    // Event listener for close messages button
+    if (closeMessages) {
+        closeMessages.addEventListener("click", () => {
+            messagesSidebar.classList.remove("messages-sidebar--open"); // Close the messages sidebar
+            updateNavState(); // Update the navbar state
+        });
+    }
+
+    // Event listener for close search button
+    if (closeSidebar) {
+        closeSidebar.addEventListener("click", () => {
+            searchSidebar.classList.remove("search-sidebar--open"); // Close the search sidebar
+            updateNavState(); // Update the navbar state
+        });
+    }
+
+    // Event listener for navbar border click
+    if (navBorder) {
+        navBorder.addEventListener("click", () => {
+            if (nav.classList.contains("nav--collapsed")) {
+                expandNav(); // Expand the navbar
+            } else {
+                collapseNav(); // Collapse the navbar
+            }
+        });
+    }
+
+    document.addEventListener("click", (e) => {
+        // Check if the click was outside the sidebar and the navigation bar
+        if (!searchSidebar.contains(e.target) &&
+            !messagesSidebar.contains(e.target) &&
+            !searchLink.contains(e.target) &&
+            !messagesLink.contains(e.target) &&
+            !nav.contains(e.target)) {
+            closeAllSidebars(); // Close all sidebars and expand the navbar
+        }
+    });
 
         // Handle AJAX search
         searchForm.addEventListener("submit", function(e) {
