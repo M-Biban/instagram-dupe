@@ -17,7 +17,9 @@
                   {% csrf_token %}
                   <button type="submit" class="btn">Remove</button>
               </form>
-              {% if follower.follower.pk not in following_user_list %}
+              {% if follower.follower.pk in follow_requests_made %}
+                  <button type="button" class="btn btn-primary" disabled>Pending...</button>
+              {%elif follower.follower.pk not in following_user_list %}
               <form method="POST" action="{% url 'create-follow-request' pk=follower.follower.pk %}">
                 {% csrf_token %}
                 {% if follower.follower.pk not in follower_user_list %}

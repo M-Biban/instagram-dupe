@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic import DetailView, CreateView
+from django.views.generic import DetailView, CreateView, View
 from socials.models import User, Follower, FollowRequest
 from django.http import HttpResponseRedirect
 from django.core.exceptions import PermissionDenied, ValidationError
@@ -17,8 +17,8 @@ class ViewUserView(LoginRequiredMixin, DetailView):
         following = Follower.objects.filter(follower = request.user).values_list('user', flat=True)
         if object == request.user:
             return HttpResponseRedirect(reverse('view-profile'))
-        if object.private and object.pk not in following:
-            raise PermissionDenied("You cannot access this page as you're not logged in as the correct user.") #probs change this to something more relevant
+        # if object.private and object.pk not in following:
+        #     raise PermissionDenied("You cannot access this page as you're not logged in as the correct user.") #probs change this to something more relevant
         return super().dispatch(request, *args, **kwargs)
     
     def get_context_data(self, **kwargs):
@@ -31,6 +31,7 @@ class ViewUserView(LoginRequiredMixin, DetailView):
         context['following_user_list']= Follower.objects.filter(follower=self.request.user).values_list('user', flat=True)
         context['follower_user_list']= Follower.objects.filter(user=self.request.user).values_list('follower', flat=True)
         context['user'] = self.request.user
+        context['follow_requests_made'] = FollowRequest.objects.filter(from_user = self.request.user).values_list('to_user', flat=True)
         
         return context
     
@@ -52,3 +53,24 @@ def create_follow_request(request, pk):
     return redirect(request.META.get('HTTP_REFERER', reverse('dashboard')))
     
     
+@login_required
+def accept_follow_request(request, pk):
+    if request.method == 'POST':
+        follow_request = get_object_or_404(FollowRequest, pk=pk)
+        if follow_request.to_user != request.user:
+            raise PermissionDenied("You cannot access this page as you're not logged in as the correct user.")
+        follow_request.accept_request()
+    else:
+        messages.warning(request, "Invalid request method.")
+    return redirect(request.META.get('HTTP_REFERER', reverse('dashboard')))
+
+@login_required
+def remove_follow_request(request, pk):
+    if request.method == 'POST':
+        follow_request = get_object_or_404(FollowRequest, pk=pk)
+        if follow_request.to_user != request.user and follow_request.from_user != request.user:
+            raise PermissionDenied("You cannot access this page as you're not logged in as the correct user.")
+        follow_request.decline_request()
+    else:
+        messages.warning(request, "Invalid request method.")
+    return redirect(request.META.get('HTTP_REFERER', reverse('dashboard')))

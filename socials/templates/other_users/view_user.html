@@ -8,12 +8,25 @@
     <p>Name: {{profile_user.first_name}} {{profile_user.last_name}}</p>
     <p>Username: {{profile_user.username}}</p>
     <p>Email: {{profile_user.email}}</p>
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userfollowerModal">
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userfollowerModal" 
+      {% if profile_user.private and profile_user.pk not in following_user_list %} disabled {% endif %} >
       Followers: {{user_followers.count}}
     </button>
     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#userfollowingModal">
       Following: {{user_is_following.count}}
     </button>
+    {% if profile_user.pk in follow_requests_made %}
+    <button type="button" class="btn btn-primary" disabled>Pending...</button>
+    {% elif profile_user.pk not in following_user_list and profile_user.pk != user.pk%}
+    <form method="POST" action="{% url 'create-follow-request' pk=profile_user.pk %}">
+      {% csrf_token %}
+      {% if profile_user.pk not in follower_user_list %}
+      <button type="submit" class="btn btn-primary">Follow</button>
+      {%else%}
+      <button type="submit" class="btn btn-primary">Follow back</button>
+      {% endif %}
+    </form>
+    {% endif %}
 </div>
 
 {% include 'other_users/follower_modal.html' %}

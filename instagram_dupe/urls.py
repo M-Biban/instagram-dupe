@@ -35,7 +35,9 @@ urlpatterns = [
     path('search/', views.search_view, name='search'),
     path('view_user/<int:pk>/', views.ViewUserView.as_view(), name='view_user'),
     path('create-follow-request/<int:pk>/', views.create_follow_request, name="create-follow-request"),
-    path('follow-requests/', views.FollowRequestsView.as_view(), name="follow-requests")
+    path('follow-requests/', views.FollowRequestsView.as_view(), name="follow-requests"),
+    path('accept-request/<int:pk>/', views.accept_follow_request, name='accept-request'),
+    path('remove-request/<int:pk>/', views.remove_follow_request, name='remove-request')
 ]
 
 urlpatterns += static(

@@ -13,7 +13,9 @@
               <a href={% url 'view_user' pk=follow.user.pk %} class="btn d-flex align-items-center">
                 <img src="{{follow.user.profile_pic.url}}" alt='profile picture'class="img-thumbnail" style="width: 2.5em; height: 2.5em; border-radius: 50%;">
                 <h5 class="card-title">{{follow.user.username}}</h5>
-             {% if follow.user.pk not in following_user_list and follow.user.pk != user.pk%}
+                {% if follow.user.pk in follow_requests_made %}
+                  <button type="button" class="btn btn-primary" disabled>Pending...</button>
+             {% elif follow.user.pk not in following_user_list and follow.user.pk != user.pk%}
               <form method="POST" action="{% url 'create-follow-request' pk=follow.user.pk %}">
                 {% csrf_token %}
                 {% if follow.user.pk not in follower_user_list %}
