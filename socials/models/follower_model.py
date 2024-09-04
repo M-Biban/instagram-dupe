@@ -1,5 +1,5 @@
 from django.db import models
-from .user_model import User
+from socials.models import User, Friendship
 from django.core.exceptions import ValidationError
 
 class Follower(models.Model):
@@ -20,5 +20,9 @@ class Follower(models.Model):
         self.delete()
         
     def unfollow(self):
+        if Friendship.objects.filter(user1 = self.user, user2= self.follower).exists():
+            Friendship.objects.get(user1=self.user, user2=self.follower).delete()
+        elif Friendship.objects.filter(user2 = self.user, user1= self.follower).exists():
+            Friendship.objects.get(user2=self.user, user1=self.follower).delete()
         self.delete()
         
