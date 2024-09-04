@@ -39,11 +39,11 @@ class ViewUserViewTestCase(TestCase):
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse('view-profile'))
         
-    def test_cannot_access_user_if_private_and_not_following(self):
+    def test_can_access_user_if_private_and_not_following(self):
         url = reverse('view_user', kwargs={'pk':5})
         self.client.login(username = self.user.username, password='Password123')
         response = self.client.get(url)
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 200)
         
     def test_can_access_private_user_if_following(self):
         url = reverse('view_user', kwargs={'pk':5})

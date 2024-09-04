@@ -10,10 +10,22 @@ from socials.models import User, Follower, FollowRequest
 
 @login_required
 def view_profile(request):
-    return render(request, 'account/view-profile.html',{'user': request.user, 'followers': Follower.objects.filter(user = request.user), 'following':Follower.objects.filter(follower = request.user),
-                                                        'following_user_list': Follower.objects.filter(follower=request.user).values_list('user', flat=True),
-                                                        'follower_user_list': Follower.objects.filter(user=request.user).values_list('follower', flat=True),
-                                                        'follow_requests_made' : FollowRequest.objects.filter(from_user = request.user).values_list('to_user', flat=True)})
+    user = request.user
+    followers = Follower.objects.filter(user = request.user)
+    following = Follower.objects.filter(follower = request.user)
+    following_user_list = Follower.objects.filter(follower=request.user).values_list('user', flat=True)
+    follower_user_list = Follower.objects.filter(user=request.user).values_list('follower', flat=True)
+    follow_requests_made = FollowRequest.objects.filter(from_user = request.user).values_list('to_user', flat=True)
+    
+    context = {
+        'user' : user,
+        'followers' : followers,
+        'following' : following,
+        'following_user_list' : following_user_list,
+        'follower_user_list' : follower_user_list,
+        'follow_requests_made' : follow_requests_made
+    }
+    return render(request, 'account/view-profile.html', context)
 
 class DeleteProfileView(LoginRequiredMixin, FormView):
     
