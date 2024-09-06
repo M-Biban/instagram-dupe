@@ -1,6 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 
-from socials.models import User, Follower
+from socials.models import User, Follower, FollowRequest
 
 import pytz
 from faker import Faker
@@ -20,7 +20,8 @@ class Command(BaseCommand):
     USER_COUNT = 30
     DEFAULT_PASSWORD = 'Password123'
     help = 'Seeds the database with sample data'
-    FRIEND_COUNT = 100
+    FRIEND_COUNT = 300
+    REQUEST_COUNT = 20
 
     def __init__(self):
         self.faker = Faker('en_GB')
@@ -29,6 +30,7 @@ class Command(BaseCommand):
         self.create_users()
         self.users = User.objects.all()
         self.try_create_followers()
+        self.try_create_requests()
 
     def create_users(self):
         self.generate_user_fixtures()
@@ -93,6 +95,25 @@ class Command(BaseCommand):
                 follower = follower,
                 user = followee
             )
+            
+    """Create follow requests"""     
+    def try_create_requests(self):
+        for i in range(self.REQUEST_COUNT):
+            try:
+                self.create_request()
+            except:
+                print("Fail")
+                pass
+        print("Request seeding complete.   ")
+        
+    def create_request(self):
+        to_user = self.get_random_user()
+        from_user = self.get_random_user()
+        FollowRequest.objects.create(
+            from_user = from_user,
+            to_user = to_user,
+            accepted = random.choice([True, False])
+        )
             
             
 

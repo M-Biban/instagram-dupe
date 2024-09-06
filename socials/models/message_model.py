@@ -6,7 +6,7 @@ class Message(models.Model):
     _from = models.ForeignKey(User, related_name = "_from", on_delete=models.CASCADE)
     _to = models.ForeignKey(User, related_name="_to", on_delete=models.CASCADE)
     content = models.TextField(blank=False, help_text="Message...")
-    date_time = models.DateTimeField(auto_now_add=True, blank=True)
+    date_time = models.DateTimeField(null = False, blank = False)
     
     def save(self, *args, **kwargs):
         if Friendship.objects.filter(user1=self._from, user2=self._to) is None and Friendship.objects.filter(user2=self._from, user1=self._to) is None:
