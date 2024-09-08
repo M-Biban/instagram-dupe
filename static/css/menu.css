@@ -138,6 +138,7 @@
 
 .search-sidebar--open {
     left: 80px; /* Align with the collapsed navbar */
+    overflow-y: auto;
 }
 
 .search-sidebar__content {
@@ -184,6 +185,9 @@
 .messages-sidebar__content {
   width: 100%;
   padding-top: 20px;
+  overflow-y: auto;
+  max-height: 100vh;
+  overflow-x: hidden;
 }
 
 .close-messages {

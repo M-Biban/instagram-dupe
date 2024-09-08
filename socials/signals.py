@@ -1,4 +1,4 @@
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 from .models import Follower, Friendship, FollowRequest
 
@@ -22,3 +22,13 @@ def automatic_follow(sender, instance, created, **kwargs):
         
         if to_user.private == False:
             instance.accept_request()
+            
+@receiver(post_delete, sender=Follower)
+def delete_friendship_if_follower_removed(sender, instance, **kwargs):
+    user1 = instance.follower
+    user2 = instance.user
+        
+    if Friendship.objects.filter(user1=user1, user2=user2).exists():
+        Friendship.objects.get(user1=user1, user2=user2).delete()
+    if Friendship.objects.filter(user1=user2, user2=user1).exists():
+        Friendship.objects.get(user1=user2, user2=user1).delete()

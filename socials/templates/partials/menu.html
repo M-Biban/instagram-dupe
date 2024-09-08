@@ -79,7 +79,20 @@
 {% comment %} Messages sidebar {% endcomment %}
 <div class="messages-sidebar" id="messagesSidebar">
     <div class="messages-sidebar__content">
-        <div id="messages-user"></div> 
+        <div id="messages-user"></div>
+        {% for result in friends %}
+        <a href={% url 'view_user' pk=result.pk %}>
+            <div class="card" style="width: 100%">
+            <div class="card-body d-flex align-items-center">
+                <img src={{result.profile_pic.url}} alt='profile picture'class="img-thumbnail" style="width: 2.5em; height: 2.5em; border-radius: 50%;">
+                <div class = "container">
+                <h5 class="card-title">{{result.username}}</h5> 
+                <p>{{result.first_name}} {{result.last_name}}</p>
+                </div>
+            </div>
+            </div>
+            </a>
+            {% endfor %}
         <button class="close-messages" id="closeMessages">Close</button>
     </div>
 </div>
