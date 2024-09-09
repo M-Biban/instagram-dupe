@@ -198,3 +198,7 @@
   background-color: #fff;
   cursor: pointer;
 }
+
+.shift-right {
+  margin-left: 20em;
+}

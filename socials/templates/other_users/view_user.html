@@ -1,10 +1,8 @@
 {% extends 'base/base_content.html' %}
 {% block content %}
-<div class="container">
   <div class="row d-flex align-items-center">
     <h1>View profile</h1>
     <img src="{{profile_user.profile_pic.url}}" alt='profile picture'class="img-thumbnail" style="width: 80px; height: 80px; border-radius: 50%;">
-  </div>
     <p>Name: {{profile_user.first_name}} {{profile_user.last_name}}</p>
     <p>Username: {{profile_user.username}}</p>
     <p>Email: {{profile_user.email}}</p>
@@ -30,8 +28,7 @@
       <button class="btn btn-primary">Friends!</button>
     </form>
     {% endif %}
-</div>
-
+  </div>
 {% include 'other_users/follower_modal.html' %}
 {% include 'other_users/following_modal.html' %}
 {%endblock%}
