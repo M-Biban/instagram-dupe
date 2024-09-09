@@ -1,6 +1,4 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
-from django.core.validators import RegexValidator
 from .user_model import User
 from .follower_model import Follower
 from django.core.exceptions import ValidationError

@@ -1,4 +1,4 @@
-from socials.models import Message, Friendship, User
+from socials.models import Message, Friendship, User, Conversation
 from django import forms
 from django.utils import timezone
 from django.core.exceptions import ValidationError
@@ -11,25 +11,26 @@ class MessageForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         self.user = kwargs.pop('user', None)
-        self.to = kwargs.pop('to', None)
+        self.conversation = kwargs.pop('conversation', None)
         super().__init__(*args, **kwargs)
 
     def clean(self):
         """Validate that the users are friends"""
         cleaned_data = super().clean()
-        _to_user = self.to
-        _from_user = self.user
-        friends = Friendship.objects.filter(user1=_to_user, user2=_from_user)
-        friends2 = Friendship.objects.filter(user1=_from_user, user2=_to_user)
-        if not friends.exists() and not friends2.exists():
-            raise ValidationError("You are not friends yet!")
+        
+        if self.conversation is None:
+            raise ValidationError("This conversation does not exist")
+        
+        if not self.conversation.participants.filter(id=self.user.id).exists():
+            raise ValidationError("You must be part of this conversation")
+    
         return cleaned_data
 
-    def save(self, _from, _to):
+    def save(self, commit=True):
         """Create a new message"""
         message = Message.objects.create(
-            _to=_to,
-            _from=_from,
+            conversation = self.conversation,
+            _from=self.user,
             content=self.cleaned_data.get('content'),
             date_time=timezone.now()
         )
