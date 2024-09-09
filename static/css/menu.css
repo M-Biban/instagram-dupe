@@ -11,29 +11,29 @@
   }
   
   .page-container {
-    height: inherit;
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    height: 100vh;
+    overflow: hidden;
   }
   
   .main {
-    height: inherit;
-    padding: 0;
-    padding-left: var(--nav-border-width);
+    grid-column: 2; /* Place the main content in the second column */
+    padding: 20px;
     overflow-y: auto;
+    transition: margin-left 0.3s ease;
   }
   
   .nav {
-    width: 12.5em;
-    height: 100vh;
-    position: relative;
+    grid-column: 1; /* Place the nav in the first column */
+    height: 100%;
     background-color: #eeeeee;
-    transition: width 0.2s;
-    flex-shrink: 0;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    overflow-y: auto;
-    overflow-x: hidden; 
+    transition: width 0.3s ease;
   }
+
+.nav--collapsed + .main {
+  margin-left: 80px; /* Adjust main content margin when nav is collapsed */
+}
   
   .nav--collapsed {
     width: var(--nav-icon-width);
