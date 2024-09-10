@@ -47,6 +47,24 @@ class CreateMessageView(LoginRequiredMixin, FormView):
         conversation = self.get_conversation()
         messages = Message.objects.filter(conversation = conversation)
         return messages
+    
+    def get_unread_messages(self):
+        conversation = self.get_conversation()
+        unread = Message.objects.filter(conversation= conversation, unread = True)
+        return unread
+    
+    def see_messages(self):
+        messages = self.get_unread_messages()
+        for message in messages:
+            if message.message_from != self.request.user:
+                message.message_seen()
+                message.save()
+            
+    
+    def get(self, request, *args, **kwargs):
+        """Handle GET request and mark messages as seen."""
+        self.see_messages()
+        return super().get(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -54,7 +72,7 @@ class CreateMessageView(LoginRequiredMixin, FormView):
         context['to'] = self.get_object()
         context['open_messages_sidebar'] = True
         context['conversation'] = self.get_conversation()
-        context['messages'] = self.get_messages()
+        context['user_messages'] = self.get_messages()
         return context
 
     def get_success_url(self):

@@ -8,6 +8,7 @@ class Message(models.Model):
     message_from = models.ForeignKey(User, related_name = "message_from", on_delete=models.CASCADE)
     content = models.TextField(blank=False, help_text="Message...")
     date_time = models.DateTimeField(null = False, blank = False)
+    unread = models.BooleanField(default=True)
     
     def save(self, *args, **kwargs):
     
@@ -21,3 +22,6 @@ class Message(models.Model):
         
     def formatted_date(self):
         return self.date_time.strftime('%B %d, %Y at %I:%M %p')
+    
+    def message_seen(self):
+        self.unread = False
