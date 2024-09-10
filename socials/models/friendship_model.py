@@ -1,6 +1,9 @@
+from django.utils import timezone
 from django.db import models
 from .user_model import User
+from .conversation_model import Conversation
 from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 class Friendship(models.Model):
     user1 = models.ForeignKey(User, related_name="user1", on_delete=models.CASCADE, blank=False)

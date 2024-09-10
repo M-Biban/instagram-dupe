@@ -30,7 +30,7 @@ class MessageForm(forms.ModelForm):
         """Create a new message"""
         message = Message.objects.create(
             conversation = self.conversation,
-            _from=self.user,
+            message_from=self.user,
             content=self.cleaned_data.get('content'),
             date_time=timezone.now()
         )

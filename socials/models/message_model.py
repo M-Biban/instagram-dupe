@@ -5,13 +5,13 @@ from django.core.exceptions import PermissionDenied, ValidationError
 
 class Message(models.Model):
     conversation = models.ForeignKey(Conversation, related_name="messages", on_delete=models.CASCADE, default=1)
-    _from = models.ForeignKey(User, related_name = "_from", on_delete=models.CASCADE)
+    message_from = models.ForeignKey(User, related_name = "message_from", on_delete=models.CASCADE)
     content = models.TextField(blank=False, help_text="Message...")
     date_time = models.DateTimeField(null = False, blank = False)
     
     def save(self, *args, **kwargs):
-        
-        if not self.conversation.participants.filter(id=self._from.id).exists():
+    
+        if not self.conversation.participants.filter(id=self.message_from.id).exists():
             raise ValidationError("Sender must be a participant in the conversation")
         
         super().save(*args, **kwargs)

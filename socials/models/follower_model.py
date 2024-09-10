@@ -1,5 +1,6 @@
 from django.db import models
-from socials.models import User, Friendship
+from .user_model import User
+from .friendship_model import Friendship
 from django.core.exceptions import ValidationError
 
 class Follower(models.Model):

@@ -6,4 +6,8 @@
     {{ form.as_p }}
     <input type="submit" class="btn" value="Send"/>
 </form>
-{% endblock %}
+{% for message in messages%}
+<p>From: {{message.from_user}} Content: {{message.content}}</p>
+{% endfor %}
+<p>
+{% endblock%}
