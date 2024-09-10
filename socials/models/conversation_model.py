@@ -1,7 +1,5 @@
 from django.db import models
 from .user_model import User
-from django.core.exceptions import ValidationError
-from django.db.models import Q
 
 class Conversation(models.Model):
     participants = models.ManyToManyField(User, related_name="conversations", blank=True)

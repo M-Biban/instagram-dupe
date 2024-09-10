@@ -1,0 +1,9 @@
+{% extends 'base/base_content.html' %}
+{% block content %}
+<h1>Create Group Chat</h1>
+<form action="{% url 'create-gc' %}" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" class="btn" value="Send"/>
+</form>
+{% endblock%}

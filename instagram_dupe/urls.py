@@ -38,7 +38,9 @@ urlpatterns = [
     path('follow-requests/', views.FollowRequestsView.as_view(), name="follow-requests"),
     path('accept-request/<int:pk>/', views.accept_follow_request, name='accept-request'),
     path('remove-request/<int:pk>/', views.remove_follow_request, name='remove-request'),
-    path('create_message/<int:pk>/', views.CreateMessageView.as_view(), name="create_message")
+    path('create_message/<int:pk>/', views.CreateMessageView.as_view(), name="create_message"),
+    path('create-groupchat', views.CreateGroupChatView.as_view(), name="create-gc"),
+    path('gc-messages/<int:pk>/', views.CreateGCMessageView.as_view(), name='gc-messages')
 ]
 
 urlpatterns += static(
