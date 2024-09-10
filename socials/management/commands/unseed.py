@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from socials.models import User, Follower, Friendship, FollowRequest
+from socials.models import User, Follower, Friendship, FollowRequest, Conversation, Message
 
 class Command(BaseCommand):
     """Build automation command to unseed the database."""
@@ -13,3 +13,5 @@ class Command(BaseCommand):
         Follower.objects.filter().delete()
         Friendship.objects.filter().delete()
         FollowRequest.objects.filter().delete()
+        Conversation.objects.filter().delete()
+        Message.objects.filter().delete()
