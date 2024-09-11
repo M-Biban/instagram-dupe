@@ -43,6 +43,8 @@ urlpatterns = [
     path('gc-messages/<int:pk>/', views.CreateGCMessageView.as_view(), name='gc-messages'),
     path('create-post/', views.CreatePostView.as_view(), name="create-post"),
     path('add-image/<int:pk>/', views.handleMultipleImagesUpload, name="add-image"),
+    path('confirm-post/<int:pk>/', views.ConfirmPostView.as_view(), name="confirm-post"),
+    path('publish-post/<int:pk>/', views.publishPost, name="publish-post")
 ]
 
 urlpatterns += static(

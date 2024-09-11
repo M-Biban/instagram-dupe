@@ -12,12 +12,13 @@ class PostForm(forms.ModelForm):
         fields = ['caption']
         
     def save(self, user):
-        Post.objects.create(
+        post = Post.objects.create(
             caption = self.cleaned_data.get('caption'),
             user = user,
             created_at = timezone.now()
         )
-        
+        return post
+    
 class ImageForm(forms.ModelForm):
     """Form to update user profiles."""
 
