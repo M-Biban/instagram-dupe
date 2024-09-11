@@ -42,7 +42,7 @@ urlpatterns = [
     path('create-groupchat/', views.CreateGroupChatView.as_view(), name="create-gc"),
     path('gc-messages/<int:pk>/', views.CreateGCMessageView.as_view(), name='gc-messages'),
     path('create-post/', views.CreatePostView.as_view(), name="create-post"),
-    path('add-image/<int:pk>/', views.AddImageView.as_view(), name="add-image")
+    path('add-image/<int:pk>/', views.handleMultipleImagesUpload, name="add-image"),
 ]
 
 urlpatterns += static(

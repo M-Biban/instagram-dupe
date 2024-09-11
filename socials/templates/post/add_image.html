@@ -1,9 +1,9 @@
 {% extends 'base/base_content.html' %}
 {% block content %}
 <h1>Add image</h1>
-<form action="{% url 'add-image' pk=post.pk %}" method="post" enctype="multipart/form-data">
+<form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" class="btn" value="Send"/>
-</form>
+  <input type="file" name="images" multiple>
+  <button type="submit">Send</button>
+</form>    
 {% endblock %}

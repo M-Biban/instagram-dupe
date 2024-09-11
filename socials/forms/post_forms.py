@@ -26,9 +26,11 @@ class ImageForm(forms.ModelForm):
 
         model = Image
         fields = ['image']
+    
         
     def save(self,post):
         Image.objects.create(
             post = post,
             image = self.cleaned_data.get('image')
         )
+        
