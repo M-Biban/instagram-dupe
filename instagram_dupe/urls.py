@@ -44,7 +44,9 @@ urlpatterns = [
     path('create-post/', views.CreatePostView.as_view(), name="create-post"),
     path('add-image/<int:pk>/', views.handleMultipleImagesUpload, name="add-image"),
     path('confirm-post/<int:pk>/', views.ConfirmPostView.as_view(), name="confirm-post"),
-    path('publish-post/<int:pk>/', views.publishPost, name="publish-post")
+    path('publish-post/<int:pk>/', views.publishPost, name="publish-post"),
+    path('like-post/<int:pk>/', views.like_toggle_view,name="like-post"),
+    path('comment/<int:pk>/', views.CreateCommentView.as_view(), name="comment")
 ]
 
 urlpatterns += static(

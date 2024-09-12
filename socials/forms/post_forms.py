@@ -1,4 +1,4 @@
-from socials.models import Post, Image
+from socials.models import Post, Image, Comment
 from django import forms
 from django.utils import timezone
 
@@ -33,5 +33,20 @@ class ImageForm(forms.ModelForm):
         Image.objects.create(
             post = post,
             image = self.cleaned_data.get('image')
+        )
+        
+class CommentForm(forms.ModelForm):
+    
+    class Meta:
+        
+        model = Comment
+        fields = ['comment']
+        
+    def save(self, post, user):
+        Comment.objects.create(
+            comment = self.cleaned_data.get('comment'),
+            post = post,
+            commented_by = user,
+            comment_time = timezone.now()
         )
         

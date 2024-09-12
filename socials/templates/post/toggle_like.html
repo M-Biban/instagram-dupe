@@ -1,0 +1,8 @@
+{% extends 'base/base_content.html' %}
+{% block content %}
+<h1>Like post</h1>
+<form method="POST" action="{%url 'like-post' pk=post.pk%}">
+    {% csrf_token %}
+    <button type="submit" class="btn">Like</button>
+</form>
+{% endblock %}
