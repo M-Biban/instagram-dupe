@@ -39,8 +39,14 @@ urlpatterns = [
     path('accept-request/<int:pk>/', views.accept_follow_request, name='accept-request'),
     path('remove-request/<int:pk>/', views.remove_follow_request, name='remove-request'),
     path('create_message/<int:pk>/', views.CreateMessageView.as_view(), name="create_message"),
-    path('create-groupchat', views.CreateGroupChatView.as_view(), name="create-gc"),
-    path('gc-messages/<int:pk>/', views.CreateGCMessageView.as_view(), name='gc-messages')
+    path('create-groupchat/', views.CreateGroupChatView.as_view(), name="create-gc"),
+    path('gc-messages/<int:pk>/', views.CreateGCMessageView.as_view(), name='gc-messages'),
+    path('create-post/', views.CreatePostView.as_view(), name="create-post"),
+    path('add-image/<int:pk>/', views.handleMultipleImagesUpload, name="add-image"),
+    path('confirm-post/<int:pk>/', views.ConfirmPostView.as_view(), name="confirm-post"),
+    path('publish-post/<int:pk>/', views.publishPost, name="publish-post"),
+    path('like-post/<int:pk>/', views.like_toggle_view,name="like-post"),
+    path('comment/<int:pk>/', views.CreateCommentView.as_view(), name="comment")
 ]
 
 urlpatterns += static(

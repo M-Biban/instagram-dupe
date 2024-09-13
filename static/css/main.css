@@ -1,0 +1,10 @@
+@font-face {
+    font-family: 'WiiFont';
+    src: url('/static/fonts/wii_font.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body {
+    font-family: 'WiiFont', sans-serif;
+}

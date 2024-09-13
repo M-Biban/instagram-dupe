@@ -1,0 +1,30 @@
+{% extends 'base/base_content.html' %}
+{% block content %}
+<h1>Add image</h1>
+<form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+  <input type="file" id="imageUpload" name="images" multiple accept="image/*">
+  <div id="imagePreview"></div>
+  <input type="submit" class="btn" value="Upload" />
+</form>    
+
+<script>
+document.getElementById('imageUpload').addEventListener('change', function(event) {
+  const files = event.target.files;
+  const previewContainer = document.getElementById('imagePreview');
+  previewContainer.innerHTML = ''; // Clear any existing previews
+
+  Array.from(files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+          const imgElement = document.createElement('img');
+          imgElement.src = e.target.result;
+          imgElement.style.maxWidth = '150px';
+          imgElement.style.margin = '10px';
+          previewContainer.appendChild(imgElement);
+      }
+      reader.readAsDataURL(file);
+  });
+});
+</script>
+{% endblock %}

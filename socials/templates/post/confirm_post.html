@@ -1,0 +1,13 @@
+{% extends 'base/base_content.html' %}
+{% block content %}
+<h1>Confirm post</h1>
+<p>{{post.caption}}</p>
+{% for image in images %}
+<img src="{{image.image.url}}" alt="image not available" style="width: 300px; height: 300px"/>
+{% endfor %}
+<form method="POST" action="{%url 'publish-post' pk=post.pk%}">
+    {% csrf_token %}
+    <button type="submit" class="btn">Publish</button>
+</form>
+<a href="{% url 'view-profile' %}" class="btn">Save to drafts</a>
+{% endblock %}
