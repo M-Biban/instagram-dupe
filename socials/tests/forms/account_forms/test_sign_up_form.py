@@ -50,7 +50,7 @@ class SignUpFormTestCase(TestCase):
         before_count = User.objects.count()
         user = form.save()
         after_count = User.objects.count()
-        self.assertEquals(before_count + 1, after_count)
+        self.assertEqual(before_count + 1, after_count)
         
     def test_not_unique_username_does_not_create_a_new_user(self):
         self.form_input['username']='johndoe'
@@ -58,7 +58,7 @@ class SignUpFormTestCase(TestCase):
         before_count = User.objects.count()
         self.assertFalse(form.is_valid())
         after_count = User.objects.count()
-        self.assertEquals(before_count, after_count)
+        self.assertEqual(before_count, after_count)
         
     def test_pasword_must_be_complicated(self):
         self.form_input['new_password']='boring'

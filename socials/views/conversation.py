@@ -13,7 +13,7 @@ class CreateMessageView(LoginRequiredMixin, FormView):
     """Create new message"""
 
     form_class = MessageForm
-    template_name = "conversation/create_message.html"
+    template_name = "conversation/create-message.html"
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()

@@ -26,7 +26,7 @@ class SignUpViewTestCase(TestCase):
         }
         
     def test_sign_up_url(self):
-        self.assertEquals(self.url, '/sign-up/')
+        self.assertEqual(self.url, '/sign-up/')
         
     def test_get_sign_up(self):
         response = self.client.get(self.url)
@@ -43,7 +43,7 @@ class SignUpViewTestCase(TestCase):
         response = self.client.post(self.url, self.form_input, follow=True)
         self.assertEqual(response.status_code, 200)
         after_count = User.objects.count()
-        self.assertEquals(before_count + 1, after_count)
+        self.assertEqual(before_count + 1, after_count)
         response_url = reverse('dashboard')
         self.assertRedirects(response, response_url, status_code=302, target_status_code=200)
         
@@ -54,7 +54,7 @@ class SignUpViewTestCase(TestCase):
         response = self.client.post(self.url, self.form_input, follow=True)
         self.assertEqual(response.status_code, 200)
         after_count = User.objects.count()
-        self.assertEquals(before_count, after_count)
+        self.assertEqual(before_count, after_count)
         
     def test_login_prohibited_mixin(self):
         self.client.login(username=self.user.username, password='Password123')

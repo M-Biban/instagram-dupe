@@ -25,9 +25,9 @@ class FollowRequestModelTestCase(TestCase):
         after_count_follower = Follower.objects.count()
         after_count_requests = FollowRequest.objects.count()
         after_count_friendship = Friendship.objects.count()
-        self.assertEquals(before_count_follower + 1, after_count_follower)
-        self.assertEquals(before_count_requests -1, after_count_requests)
-        self.assertEquals(before_count_friendship, after_count_friendship)
+        self.assertEqual(before_count_follower + 1, after_count_follower)
+        self.assertEqual(before_count_requests -1, after_count_requests)
+        self.assertEqual(before_count_friendship, after_count_friendship)
         
     def test_default_accepted_value_is_false(self):
         before_count = Follower.objects.count()
@@ -36,27 +36,27 @@ class FollowRequestModelTestCase(TestCase):
             from_user = self.user,
             to_user = self.other
         )
-        self.assertEquals(request.accepted, False)
+        self.assertEqual(request.accepted, False)
         after_count = Follower.objects.count()
-        self.assertEquals(before_count,after_count)
+        self.assertEqual(before_count,after_count)
         
     def test_from_user_delete_on_cascade(self):
         before_count = FollowRequest.objects.count()
         self.other.delete()
         after_count = FollowRequest.objects.count()
-        self.assertEquals(before_count - 1, after_count)
+        self.assertEqual(before_count - 1, after_count)
         
     def test_to_user_delete_on_cascade(self):
         before_count = FollowRequest.objects.count()
         self.user.delete()
         after_count = FollowRequest.objects.count()
-        self.assertEquals(before_count - 1, after_count)
+        self.assertEqual(before_count - 1, after_count)
         
     def test_decline_request(self):
         before_count = FollowRequest.objects.count()
         self.request.decline_request()
         after_count = FollowRequest.objects.count()
-        self.assertEquals(before_count - 1, after_count)
+        self.assertEqual(before_count - 1, after_count)
         
     def test_signal(self):
         self.user1 = User.objects.get(username = "janedoe")
@@ -79,7 +79,7 @@ class FollowRequestModelTestCase(TestCase):
         self.assertEqual(friendship.user2, self.user2)
         
         after_count  = Friendship.objects.count()
-        self.assertEquals(before_count + 1, after_count)
+        self.assertEqual(before_count + 1, after_count)
         
     def test_cannot_request_exisiting_follower(self):
         self.user = User.objects.get(username = 'petrapickles')

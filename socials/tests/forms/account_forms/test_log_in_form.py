@@ -41,10 +41,10 @@ class LogInFormTestCase(TestCase):
     def test_form_authenticates_user(self):
         form = LogInForm(data=self.form_input)
         user = form.get_user()
-        self.assertEquals(user, self.user)
+        self.assertEqual(user, self.user)
         
     def test_invalid_form(self):
         self.form_input['username']= ''
         form = LogInForm(data=self.form_input)
         self.assertFalse(form.is_valid())
-        self.assertNotEquals(self.user, form.get_user())
+        self.assertNotEqual(self.user, form.get_user())

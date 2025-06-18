@@ -16,7 +16,7 @@ class LogOutViewTestCase(TestCase):
         self.user = User.objects.get(username='johndoe')
         
     def test_log_out_url(self):
-        self.assertEquals(self.url, '/log-out/')
+        self.assertEqual(self.url, '/log-out/')
         
     def test_log_out_works(self):
         """Test that accessing the log_out view logs out the user."""

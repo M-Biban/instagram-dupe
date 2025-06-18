@@ -20,13 +20,13 @@ class FriendshipModelTestCase(TestCase):
         before_count = self.get_count()
         self.user.delete()
         after_count = self.get_count()
-        self.assertEquals(before_count-1, after_count)
+        self.assertEqual(before_count-1, after_count)
         
     def test_on_delete_cascade_follower(self):
         before_count = self.get_count()
         self.follower.delete()
         after_count = self.get_count()
-        self.assertEquals(before_count - 1, after_count)
+        self.assertEqual(before_count - 1, after_count)
         
     def test_no_follower_relationship_repeat(self):
         before_count = self.get_count()
@@ -37,7 +37,7 @@ class FriendshipModelTestCase(TestCase):
             )
         except:
             pass
-        self.assertEquals(before_count, self.get_count())
+        self.assertEqual(before_count, self.get_count())
         
     def test_reverse_follower_is_allowed(self):
         before_count = self.get_count()
@@ -48,7 +48,7 @@ class FriendshipModelTestCase(TestCase):
             )
         except:
             pass
-        self.assertEquals(before_count+1, self.get_count())
+        self.assertEqual(before_count+1, self.get_count())
         self.assertTrue(Friendship.objects.filter(user1=self.user, user2=self.follower).exists())
         
     def test_cannot_follow_yourself(self):
@@ -60,7 +60,7 @@ class FriendshipModelTestCase(TestCase):
             )
         except:
             pass
-        self.assertEquals(before_count, self.get_count())
+        self.assertEqual(before_count, self.get_count())
         
     def get_count(self):
         return Follower.objects.count()

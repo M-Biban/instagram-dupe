@@ -1,6 +1,5 @@
 """Unit tests for the Search Form."""
 from django.test import TestCase
-from socials.models import User
 from socials.forms import SearchForm
 from django import forms
 

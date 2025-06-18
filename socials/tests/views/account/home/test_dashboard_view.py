@@ -17,14 +17,14 @@ class DashboardViewTestCase(TestCase):
         
     def test_dashboard_url(self):
         required_url = '/dashboard/'
-        self.assertEquals(self.url, required_url)
+        self.assertEqual(self.url, required_url)
         
     def test_dashboard_context(self):
         self.client.login(username=self.user.username, password='Password123')
         response = self.client.get(self.url)
         self.assertTemplateUsed(response, 'dashboard.html')
         user = response.context['user']
-        self.assertEquals(self.user, user)
+        self.assertEqual(self.user, user)
     
     def test_login_required(self):
         redirect_url = reverse_with_next('log-in', self.url)

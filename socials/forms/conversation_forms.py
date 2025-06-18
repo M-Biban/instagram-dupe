@@ -49,7 +49,7 @@ class GroupChatForm(forms.ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         participants = self.cleaned_data.get('participants')
-        if participants.count() <= 2:
+        if participants.count() < 2:
             raise ValidationError("There must be at least 3 people in a gc")
         
         return cleaned_data

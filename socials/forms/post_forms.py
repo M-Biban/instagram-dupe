@@ -3,7 +3,7 @@ from django import forms
 from django.utils import timezone
 
 class PostForm(forms.ModelForm):
-    """Form to update user profiles."""
+    """Form to post"""
 
     class Meta:
         """Form options."""
@@ -20,7 +20,7 @@ class PostForm(forms.ModelForm):
         return post
     
 class ImageForm(forms.ModelForm):
-    """Form to update user profiles."""
+    """Form to add images to post."""
 
     class Meta:
         """Form options."""
@@ -36,6 +36,7 @@ class ImageForm(forms.ModelForm):
         )
         
 class CommentForm(forms.ModelForm):
+    """Form to add comments to post."""
     
     class Meta:
         

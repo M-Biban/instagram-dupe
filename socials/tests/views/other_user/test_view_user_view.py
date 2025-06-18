@@ -29,8 +29,8 @@ class ViewUserViewTestCase(TestCase):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context['profile_user'], self.other)
-        self.assertEquals(response.context['user_followers'].count(), 1)
-        self.assertEquals(response.context['user_is_following'].count(), 1)
+        self.assertEqual(response.context['user_followers'].count(), 1)
+        self.assertEqual(response.context['user_is_following'].count(), 1)
         
     def test_user_views_their_own_profile(self):
         url = reverse('view_user', kwargs={'pk':1})

@@ -1,0 +1,11 @@
+[
+    {
+        "model": "socials.groupconversation",
+        "pk" : 1,
+        "fields":{
+            "gc_name": "First gc",
+            "participants": [1,2,3],
+            "created_at": "2025-06-16T12:38:00.813649Z"
+        }
+    }
+]

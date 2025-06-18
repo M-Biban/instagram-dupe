@@ -104,6 +104,9 @@ navBorder.addEventListener("click", () => {
 });
 }
 
+var chat = document.getElementById('chat');
+   chat.scrollTop = chat.scrollHeight - chat.clientHeight;
+
 document.addEventListener("click", (e) => {
 // Check if the click was outside the sidebar and the navigation bar
 if (!searchSidebar.contains(e.target) &&
