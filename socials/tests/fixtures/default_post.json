@@ -1,0 +1,12 @@
+[
+    {
+        "model": "socials.post",
+        "pk": 1,
+        "fields": {
+            "caption" : "Test caption",
+            "created_at" : "2025-06-16T12:38:00.813649Z",
+            "user": 1,
+            "draft": true
+        }
+    }
+]

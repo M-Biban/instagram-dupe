@@ -1,20 +1,20 @@
-"""Unit tests for the friendship model"""
+"""Unit tests for the follower model"""
 from django.test import TestCase
 from socials.models import FollowRequest, User, Friendship, Follower
 
-class FriendshipModelTestCase(TestCase):
+class FollowerModelTestCase(TestCase):
     
     fixtures = [
         'socials/tests/fixtures/default_user.json',
         'socials/tests/fixtures/other_users.json',
-        'socials/tests/fixtures/default_follower.json'
+        'socials/tests/fixtures/default_follower.json',
+        'socials/tests/fixtures/default_friendship.json'
     ]
     
     def setUp(self):
         self.user = User.objects.get(username='petrapickles')
         self.follower = User.objects.get(username = 'peterpickles')
-        self.followers = Follower.objects.get(user = self.user,
-                                             follower = self.follower)
+        self.followers = Follower.objects.get(pk = 1)
         
     def test_on_delete_cascade_user(self):
         before_count = self.get_count()
@@ -27,6 +27,37 @@ class FriendshipModelTestCase(TestCase):
         self.follower.delete()
         after_count = self.get_count()
         self.assertEqual(before_count - 1, after_count)
+    
+    def test_removing_follower_does_not_delete_user(self):
+        before_count = User.objects.count()
+        self.followers.remove_follower()
+        after_count = User.objects.count()
+        self.assertEqual(before_count, after_count)
+        
+    def test_remove_follower(self):
+        before_count = Follower.objects.count()
+        self.followers.remove_follower()
+        after_count = Follower.objects.count()
+        self.assertEqual(before_count - 1, after_count)
+        
+    def test_unfollow(self):
+        before_count = Follower.objects.count()
+        self.followers.unfollow()
+        after_count = Follower.objects.count()
+        self.assertEqual(before_count - 1, after_count)
+        
+    def test_unfollow_friendship(self):
+        before_count = Follower.objects.count()
+        Follower.objects.get(pk=2).unfollow()
+        after_count = Follower.objects.count()
+        self.assertEqual(before_count - 1, after_count)
+        
+    def test_unfollow_friendship1(self):
+        before_count = Follower.objects.count()
+        Follower.objects.get(pk=3).unfollow()
+        after_count = Follower.objects.count()
+        self.assertEqual(before_count - 1, after_count)
+        
         
     def test_no_follower_relationship_repeat(self):
         before_count = self.get_count()

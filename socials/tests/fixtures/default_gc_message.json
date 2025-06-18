@@ -1,0 +1,13 @@
+[
+    {
+        "model": "socials.gcmessage",
+        "pk" : 1,
+        "fields":{
+            "group_chat": 1,
+            "gc_message_from": 1,
+            "content": "Hi guys!",
+            "date_time": "2025-06-17T12:38:00.813649Z",
+            "seen_by": [2]
+        }
+    }
+]

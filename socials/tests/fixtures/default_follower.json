@@ -6,5 +6,23 @@
         "user": 3,
         "follower": 4
       }
+    },
+
+    {
+      "model": "socials.follower",
+      "pk": 2,
+      "fields": {
+        "user": 1,
+        "follower": 2
+      }
+    },
+
+    {
+      "model": "socials.follower",
+      "pk": 3,
+      "fields": {
+        "user": 2,
+        "follower": 1
+      }
     }
 ]

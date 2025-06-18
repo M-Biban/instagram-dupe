@@ -1,0 +1,45 @@
+[
+    {
+        "model": "socials.post",
+        "pk": 2,
+        "fields": {
+            "caption" : "Pretend this is cool",
+            "created_at" : "2024-06-16T12:38:00.813649Z",
+            "user": 1,
+            "draft": false
+        }
+    },
+
+    {
+        "model": "socials.post",
+        "pk": 3,
+        "fields": {
+            "caption" : "cancelled caption",
+            "created_at" : "2025-03-16T12:38:00.813649Z",
+            "user": 3,
+            "draft": true
+        }
+    },
+
+    {
+        "model": "socials.post",
+        "pk": 4,
+        "fields": {
+            "caption" : "blow this up",
+            "created_at" : "2025-05-02T12:38:00.813649Z",
+            "user": 2,
+            "draft": true
+        }
+    },
+
+    {
+        "model": "socials.post",
+        "pk": 5,
+        "fields": {
+            "caption" : "omg omg omg",
+            "created_at" : "2025-05-02T12:38:00.813649Z",
+            "user": 2,
+            "draft": true
+        }
+    }
+]

@@ -1,6 +1,7 @@
 """Unit tests for the request model"""
 from django.test import TestCase
 from socials.models import FollowRequest, User, Friendship, Follower
+from django.core.exceptions import ValidationError
 
 class FollowRequestModelTestCase(TestCase):
     
@@ -95,3 +96,31 @@ class FollowRequestModelTestCase(TestCase):
         
         after_count = FollowRequest.objects.count()
         self.assertEqual(before_count,after_count)
+    
+    def test_cannot_follow_yourself(self):
+        self.request.from_user = self.user
+        self.request.to_user = self.user
+        self._assert_request_is_invalid()    
+    
+    def test_cannot_request_again(self):
+        before_count = FollowRequest.objects.count()
+        try:
+            FollowRequest.objects.create(
+                from_user = self.other,
+                to_user = self.user
+            )
+        except:
+            pass
+        
+        after_count = FollowRequest.objects.count()
+        self.assertEqual(before_count,after_count)
+    
+    def _assert_request_is_valid(self):
+        try:
+            self.request.save()
+        except (ValidationError):
+            self.fail('Test user should be valid')
+
+    def _assert_request_is_invalid(self):
+        with self.assertRaises(ValidationError):
+            self.request.save()

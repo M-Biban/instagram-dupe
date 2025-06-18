@@ -1,0 +1,23 @@
+[
+    {
+        "model": "socials.comment",
+        "pk": 1,
+        "fields": {
+            "post": 1,
+            "commented_by": 2,
+            "comment": "test comment",
+            "comment_time": "2025-06-17T12:38:00.813649Z"
+        }
+    },
+
+    {
+        "model": "socials.comment",
+        "pk": 2,
+        "fields": {
+            "post": 1,
+            "commented_by": 3,
+            "comment": "test comment 2",
+            "comment_time": "2025-06-18T12:38:00.813649Z"
+        }
+    }
+]

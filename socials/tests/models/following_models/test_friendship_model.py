@@ -1,6 +1,6 @@
 """Unit tests for the friendship model"""
 from django.test import TestCase
-from socials.models import FollowRequest, User, Friendship, Follower
+from socials.models import User, Friendship
 
 class FriendshipModelTestCase(TestCase):
     
@@ -31,6 +31,18 @@ class FriendshipModelTestCase(TestCase):
             friendship = Friendship.objects.create(
                 user1 = self.friend,
                 user2 = self.user
+            )
+        except:
+            pass
+        after_count = Friendship.objects.count()
+        self.assertEqual(before_count, after_count)
+        
+    def test_no_repeat_friendship2(self):
+        before_count = Friendship.objects.count()
+        try:
+            friendship = Friendship.objects.create(
+                user1 = self.user,
+                user2 = self.friend
             )
         except:
             pass

@@ -11,7 +11,6 @@ class GCMessage(models.Model):
     seen_by = models.ManyToManyField(User, related_name='seen_group_messages', blank=True)
     
     def save(self, *args, **kwargs):
-        
         super().save(*args, **kwargs)
         
     def delete_message(self):
@@ -19,12 +18,9 @@ class GCMessage(models.Model):
         
     def formatted_date(self):
         return self.date_time.strftime('%B %d, %Y at %I:%M %p')
-    
-    def message_seen(self):
-        self.unread = False
         
     def mark_as_seen(self, user):
-        if user in self.conversation.participants.all():
+        if user in self.group_chat.participants.all():
             self.seen_by.add(user)
             self.save()
             
